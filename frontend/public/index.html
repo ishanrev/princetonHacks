@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="icon" href="main-logo.png" type="image/"> -->
+    <link rel="stylesheet" href="../src/editor-lib/css/editor.css">
+    <script src="https://use.fontawesome.com/your-embed-code.js"></script>
+    <!-- <title>Structo | Quicksort to the top</title> -->
+    <script type="tailwind-config" src="../tailwind.config.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+    <script src="http://latex.codecogs.com/latexit.js"></script>
+    <!-- montserrat thin -->
+    <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet"> -->
+
+    <!-- montserrat thick -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@450&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/katex.min.css" integrity="sha384-bYdxxUwYipFNohQlHt0bjN/LCpueqWz13HufFEV1SUatKs1cm4L6fFgCi1jT643X" crossorigin="anonymous">
+
+    <!-- Roboto  thin -->
+    <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"> -->
+
+    <!-- Roboto thick -->
+    <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet"> -->
+
+    <!-- '#EDE6DB' - base
+    '#417D7A25' - sub
+    '#1D5C63' - primary
+    '#1D5C63' - dark -->
+    <!-- {
+    100: '#D3ECEA',
+    200: '#A6D9D4',
+    300: '#7AC5BF',
+    400: '#4DB2A9',
+    main: '#219F94'
+
+    home page colour #57687a
+} -->
+    <style>
+        .crownBounce {
+            --animate-duration: 2s;
+        }
+
+        .navbar-progress .ant-progress-inner{
+            width: 20px !important;
+            height: 25px !important;
+            margin-right: 4px !important;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            content: [],
+            theme: {
+                extend: {
+                    colors: {
+                        base: '#F1DDBF25',
+                        sub: {
+                            100: '#78938A15',
+                            200: '#78938A25',
+                            300: '#78938A50',
+                            400: '#78938A75',
+                            500: '#78938A',
+                        },
+                        primary: {
+                            100: '#92BA9210',
+                            200: '#92BA9225',
+                            300: '#92BA9250',
+                            400: '#92BA9275',
+                            500: '#92BA92',
+                        },
+                        dark: {
+                            100: '#525E7510',
+                            200: '#525E7525',
+                            300: '#525E7550',
+                            400: '#525E7588',
+                            500: '#525E75',
+                        },
+                        test: '#31254F',
+                        fa: '#fafafa'
+                    },
+                    boxShadow: {
+                        'full': '3px 3px 3px 3px rgba(0, 0, 0, 0.3)',
+                    }
+                },
+                maxWidth: {
+                    '1/2': '50%',
+                }
+            },
+            plugins: []
+        }
+    </script>
+
+
+
+    <title>Document</title>
+
+</head>
+
+<body>
+    <div id="root" >
+
+    </div>
+    <style class="scrollbar-css">
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        *::-webkit-scrollbar-track {
+            background: none;
+            /* background-color: #bcc5c9af; */
+        }
+
+        *::-webkit-scrollbar-thumb {
+            background-color: #697479af;
+            border-radius: 10px;
+            height: 30px;
+        }
+
+        *::-webkit-scrollbar {
+            width: 8px;
+        }
+    </style>
+    <style class="split-gutter-css">
+        .gutter {
+            background-color: #eee;
+            background-repeat: no-repeat;
+            background-position: 50%;
+            transition: background-color 0.5s;
+            /* margin: 0px 3px; */
+            border-radius: 2px;
+            cursor: col-resize;
+        }
+
+        .gutter:active,
+        .gutter:hover {
+            background-color: rgb(139, 161, 161);
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==');
+        }
+
+        .gutter.gutter-vertical {
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAFAQMAAABo7865AAAABlBMVEVHcEzMzMzyAv2sAAAAAXRSTlMAQObYZgAAABBJREFUeF5jOAMEEAIEEFwAn3kMwcB6I2AAAAAASUVORK5CYII=');
+        }
+
+        .gutter.gutter-horizontal {
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==');
+        }
+
+        .gutter.gutter-horizontal:hover {}
+
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+    <style class="ant-design-modal">
+        /* :global {
+
+            .modalStyle2 .ant-modal-header {
+                border-radius: 20px 20px 0 0;
+            }
+        } */
+    </style>
+    <style>
+        .waiting-room-img {
+            background-image: url("https://coolbackgrounds.io/images/backgrounds/index/ranger-4df6c1b6.png");
+            background-repeat: no-repeat;
+            background-size: 100%;
+        }
+    </style>
+</body>
+
+</html>

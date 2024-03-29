@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>ACE in Action</title>
+
+    <style type="text/css" media="screen">
+        #editor {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper ">
+
+        <div id="editor" class="roun" style="height: 50%;width: 50%;border-radius: 0.5rem;">
+            function foo(items) {
+            var x = "All this is syntax highlighted";
+            return x;
+            }
+        </div>
+    </div>
+    <div class="test w-2/3">
+
+        <script src="../src/editor-lib/ace.js" type="text/javascript" charset="utf-8"></script>
+        <script>
+            var editor = ace.edit("editor");
+            editor.setTheme("ace/theme/monokai");
+            editor.session.setMode("ace/mode/javascript");
+            
+            
+        </script>
+        <script>
+            console.log()
+        </script>
+    </div>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- <style>
+        .editor {
+            width: 50%;
+            height: 50%;
+        }
+    </style> -->
+</body>
+
+</html>

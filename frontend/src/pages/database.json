@@ -1,0 +1,114 @@
+{
+    "_id": {
+      "$oid": "624044d2bf2ff26c3a0e123f"
+    },
+    "description": "Description lies here",
+    "questions": [
+      {
+        "num": 0,
+        "name": "Dummy question 1",
+        "questionText": "Find the aquare root of the number",
+        "funcName": "sum",
+        "points": 10,
+        "parameterNames": [
+          "num"
+        ],
+        "parameterTypes": [
+          "Integer"
+        ],
+        "_id": {
+          "$oid": "62404566bf2ff26c3a0e1242"
+        },
+        "testCases": [
+          {
+            "num": 0,
+            "name": "case 1",
+            "input": [
+              2
+            ],
+            "output": "4",
+            "_id": {
+              "$oid": "62404589bf2ff26c3a0e1246"
+            }
+          },
+          {
+            "num": 1,
+            "name": "case 1",
+            "input": [
+              8
+            ],
+            "output": "64",
+            "_id": {
+              "$oid": "62404595bf2ff26c3a0e124b"
+            }
+          },
+          {
+            "num": 2,
+            "name": "case 1",
+            "input": [
+              9
+            ],
+            "output": "81",
+            "_id": {
+              "$oid": "6240459ebf2ff26c3a0e1251"
+            }
+          }
+        ]
+      },
+      {
+        "num": 1,
+        "name": "Dummy question 1",
+        "questionText": "Find the cube of the number",
+        "funcName": "cube",
+        "points": 10,
+        "parameterNames": [
+          "num"
+        ],
+        "parameterTypes": [
+          "Integer"
+        ],
+        "_id": {
+          "$oid": "624045ccbf2ff26c3a0e1258"
+        },
+        "testCases": [
+          {
+            "num": 0,
+            "name": "case 1",
+            "input": [
+              3
+            ],
+            "output": "27",
+            "_id": {
+              "$oid": "624045e2bf2ff26c3a0e1260"
+            }
+          },
+          {
+            "num": 1,
+            "name": "case 1",
+            "input": [
+              2
+            ],
+            "output": "8",
+            "_id": {
+              "$oid": "624045e8bf2ff26c3a0e1269"
+            }
+          },
+          {
+            "num": 2,
+            "name": "case 1",
+            "input": [
+              9
+            ],
+            "output": "729",
+            "_id": {
+              "$oid": "624045f8bf2ff26c3a0e1273"
+            }
+          }
+        ]
+      }
+    ],
+    "name": "Dummy test 1",
+    "creator": "Ishan Revankar",
+    "public": false,
+    "__v": 8
+  }

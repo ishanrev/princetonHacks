@@ -1,0 +1,90 @@
+Things to do damn
+: enter game pin page
+: improve friends section
+: what data for progress charts
+what
+    dw
+}
+
+2D array workshhet
+
+1)
+
+loop x from 0 to n-1
+    loop y from 0 to N-1
+        arr[x][y] = INPUT a
+        y=y+1
+    x=x+1
+    
+
+
+loop row from 0 to N-1
+    loop col from 0 to N-1          
+        sortedRow = sort(arr[row])
+        baseColumn  = []
+        loop x from 0 to N-1
+            baseColumn[x] = arr[x][row]
+        
+        sortedColumn = sort(baseColumn)]
+        if(arr[row][col] = sortedRow[0] and arr[row][col] = sortedColumn[sortedColumn.length-1])
+            OUTPUT arr[row][col]
+        col = col+1
+    row = row+1
+        
+    
+
+
+function sort(arr)
+ declare   temp[n]
+    loop  x from 0 to arr.length-2
+        loop  y from 0 to arr.length-2-x
+            if arr[y+1]<arr[x]
+                temp = arr[y+1]
+                arr[y+1] = arr[x]
+                arr[x] = temp
+            y=y+1
+        x=x+1
+    return arr
+
+Sylvester
+Aryaman 
+Ishan
+Irfan
+Vismay
+Ananyo
+Isabel
+Ahaan
+Pritika 
+Meghna
+    
+{friends[type].map((friend, index) => {
+                    return (
+                        <>
+                            <div className="wrapper mb-5" key={index}>
+
+                                <div className="friend flex mb-2">
+                                    <img src="https:picsum.photos/50" alt="img" className="profilePic w-9 h-9 mr-2 mt-2 rounded-[100%] object-cover" />
+                                    <div className="details">
+                                        <span>Username surname</span>
+                                        <br />
+                                        <span className='text-[11px]'>small details</span>
+                                        <button onClick={() => accept(friend)}>Accept</button>
+                                        <button onClick={() => decline(friend)}>Decline</button>
+                                    </div>
+                                </div>
+                                <div className="hr w-full h-[1px] bg-gray-300 rounded-3xl">
+
+                                </div>
+                            </div>
+                        </>
+                    )
+                })
+                }
+
+Pottery is a relatively uncommon hobby partly because of the wrong notion people have regarding this form of art. 
+However I find it quite peaceful and calming and the fact that the room for creativity is so big makes it even more fun.
+
+Competitive Ice skating migh sound peculiar or unheard of but it is soething I have a deep interst in. The  
+boy do i feel like just typiing right nw man the se nails are acually like 
+so annoying now I don even mneed to wierdly shape my fingers to type properly
+thats right its just so mmuch easier now

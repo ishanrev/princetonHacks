@@ -1,0 +1,40 @@
+{friends.friends.map((friend, index) => {
+                                    let display = false
+                                    if (friend.startsWith(challengeFriendSearch)) {
+                                        display = true
+                                    }
+                                    return (
+                                        <>
+                                            {display === true ?
+                                                <>
+                                                    <div className="wrapper flex justify-between items-center" key={index}>
+
+                                                        <div className="friend flex mb-2" key={index}>
+                                                            <img src="https://picsum.photos/50" alt="img" className="profilePic w-9 h-9 mr-2 mt-2 rounded-[100%] object-cover" />
+                                                            <div className="details">
+                                                                <span>{friend}</span>
+                                                                <br />
+                                                                <span className='text-[11px]'>small details</span>
+                                                            </div>
+                                                        </div>
+                                                        <button className='add friend border-2 rounded-[100%] 
+                                        w-10 h-10 border-gray-300 pt-[0.3rem] pb-3 hover:bg-slate-200'
+                                                            onClick={() => {
+                                                                if (challengeFriends.includes(friend) === false) {
+
+                                                                    let temp = [...challengeFriends, friend]
+                                                                    setChallengeFriends(temp)
+                                                                }
+                                                            }}
+                                                        >
+                                                            <PlusOutlined />
+                                                        </button>
+                                                    </div>
+                                                    <div className="hr w-full h-[1px] bg-gray-300 rounded-3xl">
+
+                                                    </div>
+                                                </>
+                                                : undefined}
+                                        </>
+                                    )
+                                })}

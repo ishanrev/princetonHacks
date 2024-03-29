@@ -1,0 +1,93 @@
+<div className="lower flex justify-around gap-5">
+                    <div className="tests w-[60vw]">
+                        <span>My Tests</span>
+                        <div className="middle mt-3 my-tests-scroll h-auto w-full flex items-center justify-between">
+                            <button onClick={() => {
+                                if (current > 0) {
+                                    let temp = current - 1
+                                    setCurrent(temp)
+                                }
+                            }}
+                                className="h-[25px] rounded-lg rounded-[100%] bg-gray-200 px-2 mx-2"
+
+                            >
+                                <i class="fa-solid fa-arrow-left"></i>
+
+                                pr</button>
+                            <div className="cards py-2 flex gap-5 justify-start overflow-x-scroll">
+                                {myTests.map((test, index) => {
+                                    {/* console.log(test) */ }
+                                    if (index >= current && index < maxMiddleNum + current)
+                                        return (
+                                            <div className="card bg-[#bcd9e750] marker:h-[150px] w-[225px] rounded-lg shadow-lg p-3 shad" key={index}>
+                                                {test}
+                                                <br /><br /><br /><br />
+                                                <Progress percent={50} />
+                                                <Progress percent={70} strokeColor='#f34' />
+                                            </div>
+                                        )
+                                })}
+
+                            </div>
+                            <button onClick={() => {
+                                if (current < myTests.length - maxMiddleNum) {
+
+                                    let temp = current + 1
+                                    setCurrent(temp)
+                                }
+                            }}
+                                className="h-[25px] rounded-[100%] bg-gray-200 px-2 mx-2"
+                            >N</button>
+                        </div>
+                        <span>Continue practicing </span>
+                        <div className="bottom mt-3 my-tests-scroll h-auto w-full items-center flex justify-between">
+                            <button onClick={() => {
+                                if (practiceCurrent > 0) {
+                                    let temp = practiceCurrent - 1
+                                    setPracticeCurrent(temp)
+                                }
+                            }}
+                                className="h-[25px] rounded-[100%] bg-gray-200 px-2 mx-2"
+                            >pr</button>
+                            <div className="cards py-2 flex gap-5 justify-start overflow-x-scroll">
+                                {practiceTests.map((test, index) => {
+                                    {/* console.log(test) */ }
+                                    if (index >= practiceCurrent && index < maxMiddleNum + practiceCurrent)
+                                        return (
+                                            <div className="card bg-[#bcd9e750] h-[150px] w-[225px] rounded-lg shadow-lg p-3 shad " key={index}>
+                                                {test}
+                                                <br /><br /><br /><br />
+                                                
+                                            </div>
+                                        )
+                                })}
+
+                            </div>
+                            <button onClick={() => {
+                                if (practiceCurrent < myTests.length - maxMiddleNum) {
+
+                                    let temp = practiceCurrent + 1
+                                    setPracticeCurrent(temp)
+                                }
+                            }}
+                                className="h-[25px] rounded-[100%] bg-gray-200 px-2 mx-2"
+                            >N</button>
+                        </div>
+                    </div>
+
+                    <div className="chart w-1/3 mt-8 h-[350px] rounded-lg shadow-lg p-4 shad bg-white">
+                        <Tabs defaultActiveKey="1" onChange={key => console.log(key)} tabBarStyle={{ color: 'black' }}>
+                            <TabPane tab="Friends" key='1'>
+                                Friends
+                            </TabPane>
+                            <TabPane tab="Pending" key='2'>
+                                Pending
+                            </TabPane>
+                            <TabPane tab="Requests" key='3'>
+                                Requests
+                            </TabPane>
+                        </Tabs>
+                    </div>
+
+
+                </div>
