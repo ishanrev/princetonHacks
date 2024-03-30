@@ -72,7 +72,15 @@ const userSchema = mongoose.Schema({
         default: [{}, {}, {}, {}, {}, {}, {}]
     },
     daysActive: [String],
-    lastLoggedIn: Date
+    lastLoggedIn: Date,
+    courses:{
+        type: [String],
+        default: []
+    },
+    badges:{
+        type: [String],
+        default: []
+    }
 })
 
 const users = mongoose.model('users', userSchema)

@@ -11,6 +11,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@langchain/community": "^0.0.43",
+    "@langchain/google-genai": "^0.0.2",
+    "@langchain/openai": "^0.0.25",
+    "@xenova/transformers": "^2.16.1",
     "axios": "^0.27.2",
     "bcrypt": "^5.0.1",
     "body-parser": "*",
@@ -20,6 +24,7 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.2",
     "http": "^0.0.1-security",
+    "langchain": "^0.1.30",
     "lodash": "^4.17.21",
     "mongoose": "^6.1.5",
     "morgan": "^1.10.0",
@@ -27,6 +32,7 @@
     "qs": "^6.11.0",
     "replit-client": "^0.25.0",
     "socket.io": "^4.5.1",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "youtube-transcript": "^1.1.0"
   }
 }

@@ -15,6 +15,7 @@ const questionRoute = require('./routes/questionRoute')
 const testCaseRoute = require('./routes/testCaseRoute')
 const authRoute = require('./routes/authRoute')
 const userRoute = require('./routes/userRoute')
+const courseRoute = require('./routes/course/courseRoute')
 // const nodemailer = require('nodemailer')
 const sockets = []
 const rooms = {}
@@ -396,6 +397,8 @@ app.use('/api/question', questionRoute)
 app.use('/api/testCase', testCaseRoute)
 app.use('/api/auth', authRoute)
 app.use('/api/user', userRoute)
+app.use('/api/course', courseRoute)
+// app.use('/api/module', moduleRoute)
 
 // Step 1:  
 

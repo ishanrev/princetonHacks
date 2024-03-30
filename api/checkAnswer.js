@@ -22,8 +22,8 @@ if (!fs.existsSync(dirCodes)) {
 const executePy = async (filepath) => {
     const name = path.basename(filepath)
     let runCommand;
-    runCommand = `python api/test-codes/${name} `
-    // runCommand = `python test-codes/${name} `
+    // runCommand = `python api/test-codes/${name} `
+    runCommand = `python test-codes/${name} `
 
     console.log("ommmmmmmmmmmmmmm saiiiiiiii rammmmmm")
     console.log(__dirname)
