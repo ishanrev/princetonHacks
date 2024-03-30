@@ -23,7 +23,7 @@ const articleSchema = mongoose.Schema({
 })
 const courseSchema = mongoose.Schema({
 
-    name: String,
+    title: String,
     modules: {
         type: [{
             videos: [videoSchema],

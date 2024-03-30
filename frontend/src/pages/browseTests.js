@@ -121,7 +121,7 @@ const TestCard = ({ testId, starts = '', small = true, challengeMode = false, ca
         })
         setUser({ ...user, saved: tempSaved })
         try {
-            let res = (await <axios className= "delete" ></axios> (axiosLink + '/test/' + testId)).data
+            let res = (await axios.get(axiosLink + '/test/' + testId)).data
             //console.log(res)
         } catch (updateTestError) {
             //console.log(updateTestError)

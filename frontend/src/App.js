@@ -41,6 +41,7 @@ import axiosLink from './axiosInstance'
 import TestCenter from './pages/testCenter'
 import Winner from './pages/winner'
 import HomePage from './pages/homePage'
+import { CoursePage } from './pages/coursePage'
 
 
 
@@ -210,6 +211,7 @@ function App() {
                                 <Route exact path='/browse' element={<BrowseTests />} />
                                 <Route exact path='/create' element={<TestMakerPage />} />
                                 <Route exact path='/joinGame' element={<GamePinPage />} />
+                                <Route exact path='/courses' element={<CoursePage />} />
 
                                 {/* <Route exact path='/tester' element={<Winner mode='challenge' winners={["62b71ed9ddd5480e39d4d4fe", "62b71ed9ddd5480e39d4d4fe"]}></Winner>} /> */}
                                 {/* <Route exact path='/sideBar' element={<SideBar />} /> */}

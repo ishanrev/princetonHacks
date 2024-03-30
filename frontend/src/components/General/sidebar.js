@@ -121,6 +121,15 @@ function SideBar({ drawer }) {
                                 <span className='text-md'>Test Center</span>
                             </div>
                         </li>
+                        <li className={'' + liClass}
+                            onClick={() => { navigate('/courses') }}
+                        >
+                            <i class="fa fa-user-group text-[18px] "></i>
+                            <div className='flex justify-start items-center'>
+                                <HddOutlined style={iconStyle} />
+                                <span className='text-md'>Courses</span>
+                            </div>
+                        </li>
                         <br /><br />
                         <li className={'' + liClass}
                             onClick={signOut}>

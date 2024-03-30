@@ -1,0 +1,124 @@
+ <Modal visible={showEditModal} onOk={handleOk} onCancel={handleCancel} title='Make Changes'>
+                <div className=' flex justify-between gapp-1'>
+                    <div>
+                        <label htmlFor="">Name</label>
+                        <br />
+                        <br />
+                        <input type="text" name="" id="" className=' rounded-md bg-slate-200 p-2 focus:outline-none' defaultValue={test.name}
+                            onChange={(e) => {
+                                setNewDetails({ ...newDetails, name: e.target.value })
+                            }}
+                        />
+                        <br />
+                        <br />
+                        {/* <input type="checkbox" name="Public" id="Public" value={testDetails.public} onClick={changePublic} /> */}
+                        <label htmlFor="" className="Public" id="Public">Public</label>
+                        <br />
+                        <br />
+                        <span className="m-2">
+                            <Switch defaultChecked={test.public} onChange={(change) => { setNewDetails({ ...newDetails, public: change }) }} />
+                        </span>
+                        <br />
+                        <br />
+                        <button onClick={deletePersonalTest} className='p-2 rounded-lg text-white bg-red-400 active:bg-red-600'>Delete</button>
+                    </div>
+                    <div className='h-[10rem] w-[17rem] rounded-lg border-2 border-slate-300'>
+
+                    </div>
+                </div>
+            </Modal>
+---------------------------------------------------------------------------------------------------------------
+                                {/* <ChalengeFriendDrawer showFriendsDrawer={showFriendsDrawer} setShowFriendsDrawer={setShowFriendsDrawer} testId={testId} /> */}
+                    {small === false ?
+                        <div className={"header h-[45%] "}>
+
+                            <img src="https://picsum.photos/300" className=' object-cover w-full h-full' alt="img here" />
+                            {/* <Image
+                                style=
+                                {{
+                                    width: 'full',
+                                    height: 'full',
+                                    marginLeft: '1rem',
+                                    objectFit: 'cover'
+                                }}
+                                cloudName="hextree" publicId={test.img !== undefined ? test.img : ALT_IMAGE} /> */}
+
+                        </div>
+                        : undefined}
+
+                {canChange === true ?
+                                    <span className='bg-primary-300 rounded-lg pt-[2px] px-2 hover:shadow-md'
+                                        onClick={() => { setShowEditModal(true) }}
+                                    >
+                                        <EditOutlined />
+
+                                    </span>
+                                    : undefined}
+
+                                    
+---------------------------------------------------------------------------------------------------------------
+
+{small === false ?
+                        <div>
+                            <div className={"footer bg-gray-200 h-[10%] px-3 py-2 pb-3 flex justify-between"}>
+                                <div className="user">
+
+                                    <span className=""><UserOutlined /></span>
+                                    <span className="pl-2 pt-1"> {test.creator}</span>
+                                </div>
+                                <ul className="interact flex gap-2">
+
+                                </ul>
+                            </div>
+                            <div className='px-5 h-[25px]'>
+
+                                {small === false && challengeMode === false && user.testProgress[testId] !== undefined ? <>
+                                    <Progress percent={
+                                        (() => {
+                                            let p;
+                                            if (user.testProgress[testId].questionsCompleted !== undefined) {
+
+                                                p = ((user.testProgress[testId].questionsCompleted) / (test.questions.length)) * 100
+                                            }
+                                            console.log(p)
+                                            return p
+                                        })()
+
+
+                                    } showInfo={false} strokeColor="#525E7580" />
+                                </> : <></>}
+                            </div>
+                        </div>
+
+                        : undefined}
+                    {challengeMode === false ?
+                        <div className={" p-3  flex justify-center gap-3 " + (() => { return small === true ? ' h-[30%] bg-sub-200' : 'h-[15%]' })()}>
+                            <button onClick={() => setShowPracticeModal(true)} className="practice px-2 py-1 w-full bg-dark-500 text-white rounded-md">Practice</button>
+                            <Modal className='SettingsModal ' title="Practice" zIndex={1000}
+                                centered visible={showPracticeModal}
+                                onOk={() => setShowPracticeModal(false)}
+                                onCancel={() => setShowPracticeModal(false)}>
+
+                                {/* <Link to = {'answeStation/' + test.Id} component= {AnswerStation}></Link> */}
+                                <Link to={'/practice/answerStation/' + testId} component={AnswerStation}>Go To The Practice Page </Link>
+                            </Modal>
+
+
+                            <button onClick={() => setShowFriendsDrawer(true)}
+                                className="play px-1 py-1 w-full bg-primary-500 text-white rounded-md">
+                                Play</button>
+                            <button onClick={() => { hostGame() }}
+                                className="play px-1 py-1 w-full bg-dark-500 text-white rounded-md">
+                                Host</button>
+
+                            <Modal className='SettingsModal ' title="Play" zIndex={1000}
+                                centered visible={showPlayModal}
+                                onOk={() => setShowPlayModal(false)}
+                                onCancel={() => setShowPlayModal(false)}>
+                                <input type="text" className='bg-gray-200 w-2'
+                                    onChange={(e) => setChallengeTo(e.target.value)} />
+                                <button onClick={challenge}>Test Challenge Friend button</button>
+                            </Modal>
+
+                        </div>
+                        : undefined}

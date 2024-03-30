@@ -74,8 +74,8 @@ const userSchema = mongoose.Schema({
     daysActive: [String],
     lastLoggedIn: Date,
     courses:{
-        type: [String],
-        default: []
+        type: Object,
+        default: {}
     },
     badges:{
         type: [String],

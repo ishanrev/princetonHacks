@@ -1,8 +1,10 @@
 const router = require('express').Router()
-const courses = require('../../models/Course')
 const { ChatOpenAI } = require("@langchain/openai");
 const axios = require('axios');
 const { getTranscript, generateEmbeddings, createSummary } = require('./summary');
+const courses = require('../../models/Course')
+const tests = require('../../models/Test');
+const users = require('../../models/User');
 
 const runLLMChain = async (prompt) => {
     const model = new ChatOpenAI({
@@ -21,6 +23,18 @@ router.get('/test', (req, res) => {
     res.send('this router works for the course route')
 })
 
+router.get('/:id', async (req, res) => {
+    const courseId = req.params.id;
+
+    console.log('hi')
+    try {
+        let course = await courses.findById(courseId)
+        res.status(200).send({ course })
+    } catch (findError) {
+        res.status(401).send(findError)
+    }
+})
+
 router.get('/create', async (req, res) => {
     let { prompt } = req.body
     // I have a main conjunciton object
@@ -34,7 +48,7 @@ router.get('/create', async (req, res) => {
                 title: String,
                 videos: [String],
                 articles = [String]
-                tests = [String]
+                tests = [String] 
             }]
     }   
 
@@ -85,7 +99,7 @@ router.get('/create', async (req, res) => {
                 let transcript = await getTranscript(link)
                 let generatedEmbeddings = await generateEmbeddings(transcript)
                 let summary = await createSummary("give me a summary of the video")
-                newVideo.summary = summary
+                newVideo.summary = summary.text
                 console.log('------------------', generatedEmbeddings, '------------------')
 
                 const questionString = await runLLMChain(`Based on the video transcript, provided below generate one multiple choice question with three options out of which one of them is correct. The question must be something that tests the user on the core concept of the video and something that helps the user understand the code explained in the video. The question should be in the schema below and Give me a JSON file in the form of a single one line string without any new lines like \\n and spaces according to the schema of the course based on the previous description. THE RESPONSE SHOULD BE JSON PARSEABLE SUCH THAT NO ERRORS OCCUR WHEN TRYING TO JSON PARSE THE RESPONSE STRING
@@ -182,7 +196,7 @@ router.get('/create', async (req, res) => {
             creator: "",
             public: true,
             description: "Sample test description",
-            questions:[]
+            questions: []
         }
 
         for (let test of module.tests) {
@@ -420,14 +434,14 @@ router.get('/create', async (req, res) => {
                 `
                 const questionResponse = await runLLMChain(questionCommand)
                 const newQuestion = JSON.parse(questionResponse)
-                
-                
+
+
                 console.log('------------------', '------------------')
                 console.log(newTest)
                 console.log('------------------', '------------------')
-                
-                
-                
+
+
+
                 newTest.questions.push(newQuestion)
             } catch (testError) {
                 console.log(testError)
@@ -448,25 +462,50 @@ router.get('/create', async (req, res) => {
     //Now I loop through the videos section and do the and I must extract the main topic similar to how bloom executes it 
 
 
-    res.status(200).send({ course, baseSchemaJSON }) 
+    res.status(200).send({ course, baseSchemaJSON })
 })
 
-router.post('/deploy', (req, res) => {
-    let { course, modules } = req.body
-    let courseObject = {
-        name: course.name
+router.post('/deploy', async (req, res) => {
+    let { course, userId } = req.body
+    let testIds = []
+    let newCourse = new courses({
+        ...course,
+
+    })
+    let moduleNum = 0
+    for (let module of course.modules) {
+        let { test } = module
+        let newTest = new tests({ ...test, creator: userId })
+        try {
+            await newTest.save()
+            newCourse.modules[moduleNum].test = newTest._id.toString()
+            testIds.push(newTest._id.toString())
+            moduleNum++;
+        } catch (saveError) {
+            res.status(400).send({ error: saveError })
+        }
     }
+
+
+
 
     try {
-        for (let module of modules) {
+        await newCourse.save()
+        console.log(newCourse._id.toString())
+        let user = await users.findById(userId)
 
+        user.courses[newCourse._id.toString()] = {
+            progress: 0
         }
 
-    } catch (parsingError) {
-        console.log(parsingError);
-        res.status(400).send({ error: parsingError })
+        await user.save()
+        res.status(200).send({ testIds })
+    } catch (updateError) {
+        res.status(400).send({ error: updateError })
     }
-    res.send('this router works for the course route')
+
+
+
 })
 
 module.exports = router

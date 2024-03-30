@@ -205,8 +205,8 @@ router.post("/check", async (req, res) => {
     console.log(req.body)
     try {
         let test = await tests.findById(testId)
-        let question = test.questions.filter((q) => {
-            return q._id.toString() === questionId;
+        let question = test.questions.filter((q,index) => {
+            return index=== questionId;
         })[0]
         const { funcName, parameterNames, parameterTypes, testCases } = question
         console.log(question)

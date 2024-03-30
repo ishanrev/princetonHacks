@@ -614,7 +614,7 @@ function AnswerStation({ game, tId, gameId, gameObject }) {
             const languageAbbreviations = { "python": 'py', "javascript": 'js' }
             let data = {
                 testId,
-                questionId: currentQuestion.question._id,
+                questionId: currentQuestion.num,
                 code,
                 language: languageAbbreviations[settings.language] !== undefined ? languageAbbreviations[settings.language] : settings.language
             }

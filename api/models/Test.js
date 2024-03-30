@@ -2,7 +2,7 @@ const mongoose = require("mongoose")
 const testCaseSchema = mongoose.Schema({
     num: {
         type: Number,
-        required: true
+        required: false
     },
     name: String,
     input: [],
