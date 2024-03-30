@@ -28,7 +28,7 @@ const courseSchema = mongoose.Schema({
         type: [{
             videos: [videoSchema],
             articles: [articleSchema],
-            tests:[String]
+            test: String
         }],
         default: []
     }

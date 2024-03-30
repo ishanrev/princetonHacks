@@ -59,7 +59,7 @@ router.get('/create', async (req, res) => {
             title: "",
             videos: [],
             articles: [],
-            tests: []
+            test: null
         }
         tempModule.title = module.title
         for (let video of module.videos) {
@@ -145,10 +145,10 @@ router.get('/create', async (req, res) => {
                     try {
 
                         const { link, title, snippet } = res.data.organic_results[articleCounter]
-                       newArticle = {
+                        newArticle = {
                             url: link,
                             title,
-                            summary:snippet
+                            summary: snippet
 
                         }
                         let transcriptResponse = await axios.get(link, {
@@ -177,6 +177,264 @@ router.get('/create', async (req, res) => {
 
         }
 
+        let newTest = {
+            name: module.title,
+            creator: "",
+            public: true,
+            description: "Sample test description",
+            questions:[]
+        }
+
+        for (let test of module.tests) {
+            try {
+                let questionCommand = `Based on the following mongodb database schema, create a single custom question from Leetcode called ${test}. The test cases must follow the scehama and create around 10 test cases. I have also provided a sample list of questions to the schema, but you must create a single question as mentioned before and return its JSON data. Give me a JSON file in the form of a single one line string without any new lines like \\n and spaces according to the schema of the course based on the previous description. Note: For the parameterTypes array, the possible parameter types are [Integer, String, Boolean, IntegerArray, StringArray, BooleanArray]. THE RESPONSE SHOULD BE JSON PARSEABLE SUCH THAT NO ERRORS OCCUR WHEN TRYING TO JSON PARSE THE RESPONSE STRING
+                Schemas:
+                
+                const testCaseSchema = mongoose.Schema({
+                    num: {
+                        type: Number,
+                        required: true
+                    },
+                    name: String,
+                    input: [],
+                    output: String
+                })
+                const questionSchema = mongoose.Schema({
+                    num: {
+                        type: Number,
+                        required: true
+                    },
+                    name: {
+                        type: String,
+                        required: true
+                    },
+                    questionText: {
+                        type: String,
+                        required: true
+                    },
+                    funcName: {
+                        type: String,
+                        required: true
+                    },
+                    createdAt: {
+                        type: Date
+                    },
+                    points: {
+                        type: Number,
+                        default: 10
+                    },
+                    parameterNames: [String],
+                    parameterTypes: [String],
+                    testCases: [testCaseSchema]
+                
+                })
+                
+
+                
+                Sample array of Questions document on MongoDB:
+                
+                
+                  "questions": [
+                    {
+                      "questionText": "Given an array of integers nums and an integer target, return an array containing the indices of the two numbers in the array such that they add up to the target. \n You may assume that each input would have exactly one solution, and you may not use the same element twice. You can return the answer in any order. \n Input: nums = [2, 7, 11, 15], target = 9 \n Output: [0, 1] \n Explanation: nums[0] + nums[1] = 2 + 7 = 9, so the answer is [0, 1].",
+                      "num": 0,
+                      "name": "Two Sum",
+                      "parameterNames": [
+                        "arr",
+                        "target"
+                      ],
+                      "parameterTypes": [
+                        "IntegerArray",
+                        "Integer"
+                      ],
+                      "funcName": "twoSum",
+                      "points": 10,
+                      "testCases": [
+                        {
+                          "name": "Test Case 1",
+                          "input": [
+                            [
+                              2,
+                              7,
+                              11,
+                              15
+                            ],
+                            9
+                          ],
+                          "output": "[0,1]"
+                        },
+                        {
+                          "name": "Test Case 2",
+                          "input": [
+                            [
+                              3,
+                              2,
+                              4
+                            ],
+                            6
+                          ],
+                          "output": "[1,2]"
+                        },
+                        {
+                          "name": "Test Case 3",
+                          "input": [
+                            [
+                              3,
+                              3
+                            ],
+                            6
+                          ],
+                          "output": "[0,1]"
+                        },
+                        {
+                          "name": "Test Case 4",
+                          "input": [
+                            [
+                              0,
+                              4,
+                              3,
+                              0
+                            ],
+                            0
+                          ],
+                          "output": "[0,3]"
+                        },
+                        {
+                          "name": "Test Case 6",
+                          "input": [
+                            [
+                              2,
+                              7,
+                              11,
+                              15
+                            ],
+                            18
+                          ],
+                          "output": "[1,2]"
+                        },
+                        {
+                          "name": "Test Case 8",
+                          "input": [
+                            [
+                              2,
+                              4,
+                              6,
+                              8,
+                              10
+                            ],
+                            14
+                          ],
+                          "output": "[2,3]"
+                        },
+                        {
+                          "name": "Test Case 9",
+                          "input": [
+                            [
+                              5,
+                              10,
+                              15,
+                              20
+                            ],
+                            25
+                          ],
+                          "output": "[1,2]"
+                        },
+                        {
+                          "name": "Test Case 10",
+                          "input": [
+                            [
+                              1,
+                              2,
+                              3,
+                              4,
+                              5
+                            ],
+                            20
+                          ],
+                          "output": "[]"
+                        }
+                      ],
+                      "_id": {
+                        "$oid": "631a3566c991ee779c9a3c29"
+                      }
+                    },
+                    {
+                      "questionText": "Given a string s consisting of printable ASCII characters, return the length of the last word in the string. A word is defined as a sequence of non-space characters separated by a space.\n\n It is guaranteed that there is at least one word in s. \n\n A 'word' is defined as a maximal substring consisting of non-space characters only. \n\n Input: 'Hello World'\nOutput: 5\nExplanation: The last word is 'World,' which has a length of 5.",
+                      "num": 0,
+                      "name": "Length of Last Word",
+                      "parameterNames": [
+                        "str"
+                      ],
+                      "parameterTypes": [
+                        "String"
+                      ],
+                      "funcName": "lastWord",
+                      "points": 10,
+                      "testCases": [
+                        {
+                          "name": "Test Case 1",
+                          "input": "Hello World",
+                          "output": 5
+                        },
+                        {
+                          "name": "Test Case 2",
+                          "input": "   Hello   World   ",
+                          "output": 5
+                        },
+                        {
+                          "name": "Test Case 3",
+                          "input": "Length of Last Word",
+                          "output": 4
+                        },
+                        {
+                          "name": "Test Case 4",
+                          "input": "OpenAI GPT-3.5",
+                          "output": 7
+                        },
+                        {
+                          "name": "Test Case 5",
+                          "input": "Hello",
+                          "output": 5
+                        },
+                        {
+                          "name": "Test Case 6",
+                          "input": "     ",
+                          "output": 0
+                        },
+                        {
+                          "name": "Test Case 7",
+                          "input": "Word",
+                          "output": 4
+                        },
+                        {
+                          "name": "Test Case 8",
+                          "input": "A",
+                          "output": 1
+                        },
+                        {
+                          "name": "Test Case 10",
+                          "input": "SpacesBefore Word SpacesAfter  ",
+                          "output": 11
+                        }
+                      ]
+                `
+                const questionResponse = await runLLMChain(questionCommand)
+                const newQuestion = JSON.parse(questionResponse)
+                
+                
+                console.log('------------------', '------------------')
+                console.log(newTest)
+                console.log('------------------', '------------------')
+                
+                
+                
+                newTest.questions.push(newQuestion)
+            } catch (testError) {
+                console.log(testError)
+            }
+        }
+        tempModule.test = newTest
+
 
         course.modules.push(tempModule)
     }
@@ -190,7 +448,7 @@ router.get('/create', async (req, res) => {
     //Now I loop through the videos section and do the and I must extract the main topic similar to how bloom executes it 
 
 
-    res.status(200).send({ course })
+    res.status(200).send({ course, baseSchemaJSON }) 
 })
 
 router.post('/deploy', (req, res) => {
