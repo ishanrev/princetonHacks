@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { UserOutlined, EditOutlined, EllipsisOutlined, SettingOutlined, SearchOutlined } from '@ant-design/icons';
-import { Menu, Dropdown, Modal, message, Switch, Empty, Progress } from 'antd';
+import { Menu, Dropdown, Modal, message, Switch, Empty, Progress, Grid } from 'antd';
 import AnswerStation from './answerStation';
 import { Link, useNavigate } from 'react-router-dom'
 import { UserContext, SocketContext, LoggedInContext } from '../contexts';
@@ -181,46 +181,47 @@ const CourseCard = ({ courseId, starts = '', small = true, challengeMode = false
     }
     return (
         <> {courseFound === true ? <div>
-
+            <br /><br /><br />
             {true ?
                 <div className={`CourseCard  rounded-lg bg-white shadow-lg hover:cursor-pointer 
-                hover:shadow-2xl overflow-hidden min-w-[200px] max-w-[350px] ` + (() => { return small === false ? ' h-[475px]' : challengeMode === false ? ' h-[200px]' : ' h-[80px' })()}
+                hover:shadow-2xl overflow-hidden w-full `}
                     onClick={() => { }}
                 >
 
                     <div className={"content  p-3 overflow-y-scroll" + (() => { return small === true ? ' h-[70%]' : ' h-[27.5%]' })()}>
-                        <span className="title flex justify-between ">
-                            <h1>{course.title}</h1>
-                            <div className=" flex gap-2 navbar-progress">
-                                <span className=' w-[2%] mt-1 pl'>
-                                    {user.courses !== undefined && user.courses[courseId] !== undefined && small === true ?
-                                        <Progress percent={
-                                            (() => {
-                                                // let p;
-                                                // if (user.testProgress[testId].questionsCompleted !== undefined) {
-
-                                                //     p = ((user.testProgress[testId].questionsCompleted) / (test.questions.length)) * 100
-                                                // }
-                                                // console.log(p)
-                                                return user.courses[courseId].progress
-                                            })()
-
-                                            // style={{ width: '10%' }}
-                                        } type="circle" showInfo={false} strokeColor="#525E7580" />
-                                        : <></>}
-                                </span>
-                                <span className="questionNumber ml-5 bg-primary-300 rounded-lg pt-[2px] px-2 hover:shadow-md  max-h-7">{test.questions.length}</span>
-                                <Dropdown overlay={moduleList}>
-                                    <span className=" bg-primary-300 rounded-lg Preview pt-[2px] px-2 hover:shadow-md max-h-7"
-                                    >Preview</span>
-                                </Dropdown>
-
-                            </div>
-
-                        </span>
-
+                        <span className='text-xl'>{course.title}</span>
+                        <br />
                         <p className="description pt-1 ">"Lorem ipsum dolor sit amet,
                             consectetur adipiscing elit, sed do eiusmod tempor sed do eiusmod tempor  "</p>
+                        <br />
+                        <div className="  ">
+                            <span className='  '>
+                                {user.courses !== undefined && user.courses[courseId] !== undefined && small === true ?
+                                    <Progress size={10} percent={
+                                        (() => {
+                                            // let p;
+                                            // if (user.testProgress[testId].questionsCompleted !== undefined) {
+
+                                            //     p = ((user.testProgress[testId].questionsCompleted) / (test.questions.length)) * 100
+                                            // }
+                                            // console.log(p)
+                                            return 30
+                                        })()
+
+                                        // style={{ width: '10%' }}
+                                    } showInfo={false} strokeColor="#525E7580" />
+                                    : <></>}
+                            </span>
+                            {/* <span className="questionNumber ml-5 bg-primary-300 rounded-lg pt-[2px] px-2 hover:shadow-md  max-h-7">{test.questions.length}</span> */}
+                            {/* <Dropdown overlay={moduleList}>
+                                    <span className=" bg-primary-300 rounded-lg Preview pt-[2px] px-2 hover:shadow-md max-h-7"
+                                    >Preview</span>
+                                </Dropdown> */}
+
+                        </div>
+                        <br />
+                        <button onClick={() => { navigate('/course/' + courseId) }} className="practice px-2 h-9 py-1 w-full bg-dark-500 text-white rounded-md">Go to Course</button>
+
 
 
                         {/* <button className="previewQuestions p-2">Preview Questions</button> */}
@@ -292,7 +293,7 @@ function CoursePage() {
                     <div className='flex justify-center items-center pr-[45%]'>
 
                         <span className=' text-2xl text-white'>
-                            Test Center
+                            My Courses
                         </span>
                     </div>
                 </div>
@@ -309,7 +310,7 @@ function CoursePage() {
                     </div>
                     {user !== undefined && user.courses !== undefined ?
 
-                        <>
+                        <div className='grid grid-cols-3 gap-12'>
                             {
                                 Object.keys(user.courses).map((courseId, index) => {
                                     return (
@@ -317,7 +318,7 @@ function CoursePage() {
                                     )
                                 })
                             }
-                        </>
+                        </div>
                         : undefined
                     }
                 </div>

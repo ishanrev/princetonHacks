@@ -492,13 +492,19 @@ router.post('/deploy', async (req, res) => {
     try {
         await newCourse.save()
         console.log(newCourse._id.toString())
-        let user = await users.findById(userId)
+        let user = await users.findOne({_id:userId})
+        let newKey = newCourse._id.toString()
 
-        user.courses[newCourse._id.toString()] = {
-            progress: 0
+        let temp = user.courses
+        console.log(temp)
+        temp[newCourse._id.toString()] = {
+            progress:40
         }
-
-        await user.save()
+        
+        // console.log(temp)
+        // user.courses = temp;
+        await users.findByIdAndUpdate(userId, {courses:temp})
+        console.log(user.courses)
         res.status(200).send({ testIds })
     } catch (updateError) {
         res.status(400).send({ error: updateError })
