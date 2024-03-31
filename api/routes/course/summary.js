@@ -1,7 +1,10 @@
 const { RecursiveCharacterTextSplitter } = require("langchain/text_splitter");
 const { Document } = require("langchain/document");
 const { MemoryVectorStore } = require("langchain/vectorstores/memory");
-const { HuggingFaceTransformersEmbeddings } = require("@langchain/community/embeddings/hf_transformers");
+let HuggingFaceTransformersEmbeddings
+(async () => {
+    HuggingFaceTransformersEmbeddings = await import("@langchain/community/embeddings/hf_transformers")
+})();
 const { YoutubeTranscript } = require('youtube-transcript');
 const { RetrievalQAChain } = require("langchain/chains");
 const { OpenAI } = require("@langchain/openai");
@@ -35,7 +38,7 @@ async function createSummary(question) {
 
     });
     const chain = RetrievalQAChain.fromLLM(model, vectorStore.asRetriever());
-    const result = await chain.call({query: question});
+    const result = await chain.call({ query: question });
     return result
 }
 
