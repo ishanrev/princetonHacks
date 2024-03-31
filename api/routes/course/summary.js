@@ -1,7 +1,7 @@
 const { RecursiveCharacterTextSplitter } = require("langchain/text_splitter");
 const { Document } = require("langchain/document");
 const { MemoryVectorStore } = require("langchain/vectorstores/memory");
-const { HuggingFaceTransformersEmbeddings } = require("langchain/embeddings/hf_transformers");
+const { HuggingFaceTransformersEmbeddings } = require("@langchain/community/embeddings/hf_transformers");
 const { YoutubeTranscript } = require('youtube-transcript');
 const { RetrievalQAChain } = require("langchain/chains");
 const { OpenAI } = require("@langchain/openai");
