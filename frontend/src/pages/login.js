@@ -4,6 +4,8 @@ import axiosLink from '../axiosInstance'
 import { LoggedInContext, SocketContext, UserContext } from '../contexts'
 import { useNavigate } from 'react-router-dom'
 import { Spin } from 'antd'
+import { jwtDecode } from "jwt-decode";
+
 function Login() {
     const { loggedIn, setLoggedIn } = useContext(LoggedInContext)
     const navigate = useNavigate()
@@ -19,9 +21,37 @@ function Login() {
     const [loading, setLoading] = useState(false)
     const input = 'bg-gray-100 rounded-lg px-2 py-2 w-full focus:outline-none border-2 border-gray-200 '
 
-    useEffect((() => {
-        setLoggedIn(undefined)
-    }), [])
+    useEffect(() => {
+        setLoggedIn(undefined);
+        const script = document.createElement('script');
+        script.src = 'https://accounts.google.com/gsi/client';
+        script.onload = () => {
+            handleGoogleScriptLoad();
+        };
+        document.body.appendChild(script);
+    }, []);
+
+    function handleCallbackResponse(response) {
+        var userObject = jwtDecode(response.credential);
+        console.log(userObject);
+        // You would handle sign-in with the decoded user object here
+    }
+
+    function handleGoogleScriptLoad() {
+        /* global google */
+        google.accounts.id.initialize({
+            client_id: "YOUR_CLIENT_ID", // Replace with your actual client ID
+            callback: handleCallbackResponse,
+        });
+    
+        google.accounts.id.renderButton(
+            document.getElementById("googleSignInButton"),
+            { theme: "outline"} // Changed text to 'login_with'
+        );
+    
+        // Prompt the user to sign in if there's a single session in Google Accounts.
+        google.accounts.id.prompt();
+    }
 
     function checkPassword() {
         let chk = false
@@ -127,6 +157,7 @@ function Login() {
                     {loggedIn === true ? <h3 className='w-full p-2 bg-green-200 rounded-lg my-4 border-2 border-green-300'>{loggedInMessage}</h3> : loggedIn === false ?
                         <h3 className='w-full p-2 bg-red-200 rounded-lg my-4 border-2 border-red-300'>{loggedInMessage}</h3> : undefined}
                 </div>
+                <div id="googleSignInButton"></div>
                 <div className='flex justify-between mt-10'>
                     <div className='py-2'>
                         <input type="checkbox" name="" id="rememberMe" className='' onChange={(e) => { setRemember(e.target.value) }} />
