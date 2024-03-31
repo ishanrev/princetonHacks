@@ -9,7 +9,7 @@ if (process.env.NODE_ENV === 'development') {
 
 } else {
 
-    SERVER = "https://structo-app.herokuapp.com/";
+    SERVER = "https://learninwave-c629a4eb000c.herokuapp.com/";
 }
 
 const socket = io.connect(SERVER);
