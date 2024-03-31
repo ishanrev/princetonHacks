@@ -510,8 +510,8 @@ app.get('/api/status', async (req, res) => {
 
 app.post('/api/mail', async (req, res) => {
     const jobId = req.query.id
-    const mail = req.body
-    console.log('hi');
+    const mail = rq.body
+    console.log('hei');
     transporter.sendMail(mail, function (error, info) {
         if (error) {
             console.log('hi');
