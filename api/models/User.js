@@ -73,13 +73,17 @@ const userSchema = mongoose.Schema({
     },
     daysActive: [String],
     lastLoggedIn: Date,
-    courses:{
+    courses: {
         type: Object,
         default: {}
     },
-    badges:{
+    badges: {
         type: [String],
         default: []
+    },
+    coursesCompleted: {
+        type: Object,
+        default: {}
     }
 })
 

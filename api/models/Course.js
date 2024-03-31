@@ -31,6 +31,10 @@ const courseSchema = mongoose.Schema({
             test: String
         }],
         default: []
+    },
+    total:{
+        type:Number,
+        default:0
     }
 })
 

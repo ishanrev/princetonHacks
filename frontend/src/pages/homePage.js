@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import NavBar from '../components/General/NavBar'
 import Home from '../images/home-image.png'
-import HomeStructo from '../images/home-structo.png'
+import HomeLogo from '../images/logoMain.png'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import axiosLink from '../axiosInstance';
@@ -12,7 +12,6 @@ function HomePage() {
     let navigate = useNavigate()
     const [mail, setMail] = useState({})
     const [transporter, setTransporter] = useState()
-    const [mailOptions, setMailOptions] = useState({ from: 'structoclient@gmail.com' })
     const sendMail = async () => {
         // try {
         //     //console.log(mailOptions)
@@ -38,7 +37,7 @@ function HomePage() {
                             .com" class="flex items-center">
                                 {/* <img src="https://flowbite.com/docs/images/logo.svg" class="mr-3 h-6 sm:h-9" alt="Flowbite Logo" />
                                 <span class="self-center text-xl font-semibold whitespace-nowrap dark-cancel:text-white">Structo</span> */}
-                                <img src={HomeStructo} alt="" className=' w-4/5' />
+                                <img src={HomeLogo} alt="" className=' w-[35%]' />
                             </a>
                             <div class="flex items-center lg:order-2 animate__animated animate__fadeInUp">
                                 <a class="text-gray-800 dark-cancel:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark-cancel:hover:bg-gray-700 focus:outline-none dark-cancel:focus:ring-gray-800 animate__animated animate__fadeInUp" onClick={() => { navigate('/login') }}>Log in</a>
@@ -51,9 +50,9 @@ function HomePage() {
                             </div>
                             <div class="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu-2  animate__animated animate__fadeInUp">
                                 <ul class="flex flex-col mt-4 text-lg font-medium lg:flex-row lg:space-x-8 lg:mt-0 pt-4">
-                                    <li>
+                                    {/* <li>
                                         <a class="block py-2 pr-4 pl-3 text-gray-700 rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark-cancel:text-white animate__animated animate__fadeInUp" aria-current="page">Home</a>
-                                    </li>
+                                    </li> */}
                                     {/* <li>
                                         <a class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100
                                          hover:bg-gray-50 lg:hover:bg-transparent lg:border-0
@@ -70,14 +69,14 @@ function HomePage() {
                                            dark-cancel:hover:text-white lg:dark-cancel:hover:bg-transparent
                                             dark-cancel:border-gray-700 animate__animated animate__fadeInUp">Marketplace</a>
                                     </li> */}
-                                    <li>
+                                    {/* <li>
                                         <a href='#middle' class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100
                                          hover:bg-gray-50 lg:hover:bg-transparent lg:border-0
                                           lg:hover:text-primary-700 lg:p-0 dark-cancel:text-gray-400 
                                           lg:dark-cancel:hover:text-white dark-cancel:hover:bg-gray-700
                                            dark-cancel:hover:text-white lg:dark-cancel:hover:bg-transparent
-                                            dark-cancel:border-gray-700 animate__animated animate__fadeInUp">Features</a>
-                                    </li>
+                                            dark-cancel:border-gray-700 animate__animated animate__fadeInUp">Features</a> */}
+                                    {/* </li> */}
                                     {/* <li>
                                         <a class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100
                                          hover:bg-gray-50 lg:hover:bg-transparent lg:border-0
@@ -86,14 +85,14 @@ function HomePage() {
                                            dark-cancel:hover:text-white lg:dark-cancel:hover:bg-transparent
                                             dark-cancel:border-gray-700 animate__animated animate__fadeInUp">Team</a>
                                     </li> */}
-                                    <li>
+                                    {/* <li>
                                         <a href='#contact' class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100
                                          hover:bg-gray-50 lg:hover:bg-transparent lg:border-0
                                           lg:hover:text-primary-700 lg:p-0 dark-cancel:text-gray-400 
                                           lg:dark-cancel:hover:text-white dark-cancel:hover:bg-gray-700
                                            dark-cancel:hover:text-white lg:dark-cancel:hover:bg-transpar
                                            ent dark-cancel:border-gray-700 animate__animated animate__fadeInUp">Contact</a>
-                                    </li>
+                                    </li> */}
                                 </ul>
                             </div>
                         </div>
@@ -115,11 +114,11 @@ function HomePage() {
                 <div class="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12 text-[#f4f7f7]">
                     <div class="mr-auto place-self-center lg:col-span-7">
                         <span class="max-w-2xl mb-4 text-2xl  tracking-tight
-                         leading-none md:text-5xl xl:text-6xl fwftext-white"><b>STR</b><span style={{ fontWeight: 100 }}>UCTO</span> - Quicksort your way to the top</span>
+                         leading-none md:text-5xl xl:text-6xl fwftext-white"><b>Learnin'</b><span style={{ fontWeight: 100 }}>Wave</span> - Quicksort your way to the top</span>
                         <br />
                         <p class="max-w-2xl mb-6 font-light text-[#f4f7f7] lg:mb-8 md:text-lg lg:text-xl 
                         fwftext-gray-400 pt-10  ">
-                            Structo is the one mode platform for you to improve your coding skills through all possible modes.</p>
+                            Learnin' Wave is the one mode platform for you to improve your coding skills through all possible modes.</p>
                         <button href="#" onClick={() => navigate('/signUp')} class="inline-flex items-center justify-center px-5 py-3 mr-3 text-sm 
                         font-medium text-center text-[#f4f7f7] rounded-lg bg-dark-500 hover:bg-dark-500
                         focus:ring-4 focus:ring-dark-300 fwffocus:ring-dark-900" >
@@ -140,7 +139,7 @@ function HomePage() {
             </section>
 
 
-            <div className="middle" id='middle'>
+            {/* <div className="middle" id='middle'>
                 <section class="bg-base dark-cancel:bg-gray-900">
                     <div class="container px-6 py-10 mx-auto">
                         <h1 class="text-3xl font-semibold text-gray-800 capitalize lg:text-4xl dark-cancel:text-white">
@@ -230,65 +229,16 @@ function HomePage() {
                         </div>
                     </div>
                 </section>
-            </div>
-            <div className="contactUs flex justify-center items-center bg-white " id='contact'>
-                <section class="bg-white dark-cancel:bg-gray-900 w-2/5">
-                    <div class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
-                        <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-center text-gray-900 dark-cancel:text-white">Contact Us</h2>
-                        <p class="mb-8 lg:mb-16 font-light text-center text-gray-500 dark-cancel:text-gray-400 sm:text-xl">Got a technical issue? Want to send feedback about a beta feature? Need details about our Business plan? Let us know.</p>
-                        <div action="#" class="space-y-8">
-                            <div>
-                                <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark-cancel:text-gray-300">Your email</label>
-                                <input type="email" id="email" class="shadow-sm bg-gray-50 border border-gray-300
-                                 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block 
-                                 w-full p-2.5 dark-cancel:bg-gray-700 dark-cancel:border-gray-600
-                                  dark-cancel:placeholder-gray-400 dark-cancel:text-white dark-cancel:focus:ring-primary-500
-                                   dark-cancel:focus:border-primary-500 dark-cancel:shadow-sm-light" placeholder="name@flowbite.com" required onChange={(e) => setMailOptions({ ...mailOptions, user: e.target.value })} />
-                            </div>
-                            <div>
-                                <label for="subject" class="block mb-2 text-sm font-medium text-gray-900 dark-cancel:text-gray-300">Subject</label>
-                                <input type="text" id="subject" class="block p-3 w-full text-sm text-gray-900
-                                 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:
-                                 border-primary-500 dark-cancel:bg-gray-700 dark-cancel:border-gray-600 dark-cancel:placeholder
-                                 -gray-400 dark-cancel:text-white dark-cancel:focus:ring-primary-500 dark-cancel:focus
-                                 :border-primary-500 dark-cancel:shadow-sm-light" placeholder="Let us know how we can help you" required onChange={(e) => setMailOptions({ ...mailOptions, subject: e.target.value })} />
-                            </div>
-                            <div class="sm:col-span-2">
-                                <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark-cancel:text-gray-400">Your message</label>
-                                <textarea id="message" rows="6" class="block p-2.5 w-full text-sm
-                                 text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300
-                                  focus:ring-primary-500 focus:border-primary-500 dark-cancel:bg-gray-700
-                                   dark-cancel:border-gray-600 dark-cancel:placeholder-gray-400 dark-cancel:text-white dark-cancel:focus:ring-primary-500
-                                    dark-cancel:focus:border-primary-500" placeholder="Leave a comment..." onChange={(e) => setMailOptions({ ...mailOptions, text: e.target.value })}></textarea>
-                            </div>
-                            <button type="submit" class="py-3 px-5 text-sm font-medium text-cente ring-transparent ring-4 active:ring-slate-400 bg-dark-500 text-white rounded-lg
-                             bg-primary-700 sm:w-fit hover:bg-primary-800 
-                            focus:outline-none focus:ring-primary-300 dark-cancel:bg-primary-600 dark-cancel:hover:bg-primary-700
-                             dark-cancel:focus:ring-primary-800" onClick={() => { sendMail() }}>Send message</button>
-                        </div>
-                    </div>
-                </section>
-            </div>
+            </div> */}
+            
             <div className="footer">
                 <footer class="p-4 bg-dark-200 text-white md:p-8 lg:p-10 dark-cancel:bg-gray-800">
                     <div class="mx-auto max-w-screen-xl text-center">
                         <a href="#" class="flex justify-center items-center text-2xl font-semibold text-gray-900 dark-cancel:text-white">
-                            <img src={HomeStructo} alt="" className=' w-1/5' />
+                            <img src={HomeLogo} alt="" className=' w-1/5' />
 
                         </a>
-                        <p class="my-6 text-gray-500 dark-cancel:text-gray-400">Improve your programming skills to better equip yourself for the future while still havig fun</p>
-                        <ul class="flex flex-wrap justify-center items-center mb-6 text-gray-900 dark-cancel:text-white">
-                            <li>
-                                <a href="#top" class="mr-4 hover:underline md:mr-6">Home</a>
-                            </li>
-                            <li>
-                                <a href="/login" class="mr-4 hover:underline md:mr-6">Login</a>
-                            </li>
-                            <li>
-                                <a href="/signUp" class="mr-4 hover:underline md:mr-6">SignUp</a>
-                            </li>
-                        </ul>
-                        <span class="text-sm text-gray-500 sm:text-center dark-cancel:text-gray-400">© 2021-2022 <a href="#" class="hover:underline">Structo™</a>. All Rights Reserved.</span>
+
                     </div>
                 </footer>
             </div>

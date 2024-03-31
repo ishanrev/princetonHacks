@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import SideBar from '../components/General/sidebarCourse'
-import { Tabs, Progress, Carousel, Drawer, notification, Modal, Spin, Empty } from 'antd'
+import { Tabs, Progress, Carousel, Drawer, notification, Modal, Spin, Empty, Radio, Space } from 'antd'
 import { PlusOutlined, UserOutlined, MinusOutlined, CheckOutlined, CloseOutlined, Badge, EditOutlined, UploadOutlined } from '@ant-design/icons'
 import { Bar } from 'react-chartjs-2';
 import DynamicChart from '../components/General/tester';
@@ -12,6 +12,8 @@ import axiosLink from '../axiosInstance';
 import ChalengeFriendDrawer from '../components/General/chalengeFriendDrawer';
 import { TestCard } from './browseTests';
 import { Image } from 'cloudinary-react'
+import YouTube from 'react-youtube';
+
 import 'animate.css';
 
 const { TabPane } = Tabs
@@ -159,6 +161,7 @@ function CourseMain() {
 
     let { courseId } = useParams()
     const [course, setCourse] = useState(null)
+    const [courseFound, setCourseFound] = useState(false)
     const [currentMode, setCurrentMode] = useState({ type: null })
 
     const [module, setModule] = useState(0)
@@ -258,6 +261,7 @@ function CourseMain() {
         try {
             let res = await axios.get(axiosLink + '/course/' + courseId)
             setCourse(res.data.course);
+            setCourseFound(true)
             console.log(res.data.course)
         } catch (getError) {
             console.log(getError)
@@ -389,17 +393,14 @@ function CourseMain() {
                 {/* <ChalengeFriendDrawer showFriendsDrawer={showFriendsDrawer} setShowFriendsDrawer={setShowFriendsDrawer} */}
 
                 {/* /> */}
-                {course !== null ? <>
+                {courseFound === true ? <>
                     <SideBar modules={course.modules} updateCurrentMode={updateCurrentMode} />
                     <div className=" bg-base h-[100vh] p-7 pt-3 pb-1 w-full overflow-y-scroll ">
                         <span className='text-2xl'>{course.title}</span>
-                        <br />
-                        <br />
-                        <br />
-                        {currentMode.type !== null ? <>
 
-                            <CourseContent course={course} module={module} type={type} number={number} />
-                        </> : undefined}
+
+
+                        <CourseContent course={course} type={type} module={module} number={number} />
 
                         {/* <span className="text-[2rem] mb-2 mx-2"></span>
                         <div className="top flex jusify-between gap-5 mb-6">
@@ -410,34 +411,118 @@ function CourseMain() {
                     </div>
                 </> : undefined}
 
-            </div >
+            </div>
 
         </>
 
     )
 }
 
+const checkAnswer = () => {
+
+}
+
 const CourseContent = ({ course, module, type, number }) => {
+
+    const [value, setValue] = useState(1);
+    const { user } = useContext(UserContext)
+    const [message, setMessage] = useState('')
+    const onChange = (e) => {
+        console.log('radio checked', e.target.value);
+        setValue(e.target.value);
+    };
+
+    const opts = {
+        height: '400',
+        width: '600',
+        playerVars: {
+            // https://developers.google.com/youtube/player_parameters
+            autoplay: 1,
+        },
+    };
+
+    const submitAnswer = async () => {
+        if (course.modules[module].videos[number].options[value].correct === true) {
+            setMessage("correct")
+            try {
+                await axios.post(axiosLink + '/course/progress', { userId: user._id.toString(), courseId: course._id.toString() })
+            } catch (progressError) {
+                console.log(progressError)
+            }
+        } else {
+            setMessage('incorrect')
+        }
+    }
     return (
         <>
+            <br />
+            <br />
+            <br />
             {type === 'video' ? <>
-                {/* <div className="top flex jusify-between gap-5 mb-6">
-                    <div className="chart w-2/3 h-[300px]  rounded-lg shadow-lg 
-                        items-center p-1  px-3 shad bg-[#fafafa]
-                         border-2 border-dark-400 gap-6 pt-5"> */}
-                {course.modules[module].videos[number].url}
+                <div className="top ">
+                    <div className="chart w-full h-full  rounded-lg shadow-lg 
+                         p-6  px-3 shad flex items-center justify-center bg-[#fafafa]
+                         border-2 border-dark-400 gap-6 pt-5">
+                        <div className='rounded-lg '>
+
+                            <YouTube videoId={course.modules[module].videos[number].url.split('=')[1]} opts={opts} />
+                        </div>
+                        <span>{course.modules[module].videos[number].summary}</span>
 
 
-                {/* </div>
+                    </div>
 
-                </div> */}
+                </div>
+                <br />
+                <div className="test ">
+                    <div className="chart w-full h-full  rounded-lg shadow-lg 
+                         p-6  px-3 shad  bg-[#fafafa]
+                         border-2 border-dark-400 gap-6 pt-5">
+                        <span className='text-lg'> {course.modules[module].videos[number].question}</span>
+                        <br />
+                        <br />
+                        <Radio.Group onChange={onChange} value={value}>
+                            <Space direction="vertical">
+
+                                {course.modules[module].videos[number].options.map(({ text, correct }, index) => {
+                                    return (
+                                        <Radio value={index}>{text}</Radio>
+                                    )
+                                })}
+
+
+                            </Space>
+                        </Radio.Group>
+                        <button onClick={() => { submitAnswer() }} className="practice px-2 h-9 py-1 w-[1/8] bg-dark-500 text-white rounded-md">Submit</button>
+                        {message === 'correct' ?
+                            <>
+                                <h3 className='w-full p-2 bg-green-200 rounded-lg my-4 border-2 border-green-300'>{message}</h3>
+                            </> : message === 'incorrect' ? <>
+                                <h3 className='w-full p-2 bg-red-200 rounded-lg my-4 border-2 border-red-300'>{message}</h3>
+                            </> : undefined}
+                    </div>
+
+                </div>
             </> : undefined}
             {type === 'article' ? <>
                 {/* <div className="top flex jusify-between gap-5 mb-6">
                     <div className="chart w-2/3 h-[300px]  rounded-lg shadow-lg 
                         items-center p-1  px-3 shad bg-[#fafafa]
                          border-2 border-dark-400 gap-6 pt-5"> */}
-                {course.modules[module].articles[number].url}
+
+                <div className="top ">
+                    <div className="chart w-full h-full  rounded-lg shadow-lg 
+                         p-6  px-3 shad flex items-center justify-center bg-[#fafafa]
+                         border-2 border-dark-400 gap-6 pt-5">
+
+                        <a><span>{course.modules[module].articles[number].url}</span></a>
+
+
+                    </div>
+
+                </div>
+                <br />
+
 
 
                 {/* </div>
@@ -445,16 +530,19 @@ const CourseContent = ({ course, module, type, number }) => {
                 </div> */}
             </> : undefined}
             {type === 'test' ? <>
-                {/* <div className="top flex jusify-between gap-5 mb-6">
-                    <div className="chart w-2/3 h-[300px]  rounded-lg shadow-lg 
-                        items-center p-1  px-3 shad bg-[#fafafa]
-                         border-2 border-dark-400 gap-6 pt-5"> */}
-                {course.modules[module].test}
+                <div className="top ">
+                    <div className="chart w-auto h-full  rounded-lg shadow-lg 
+                         p-6  px-3 shad flex items-center justify-center bg-[#fafafa]
+                         border-2 border-dark-400 gap-6 pt-5">
+
+                        {/* <span>{course.modules[module].test}</span> */}
+                        <TestCard courseId={course._id.toString()} course={true} testId={course.modules[module].test} />
 
 
-                {/* </div>
+                    </div>
 
-                </div> */}
+                </div>
+                <br />
             </> : undefined}
         </>
     )

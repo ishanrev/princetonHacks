@@ -14,7 +14,7 @@ import { Image } from 'cloudinary-react'
 // import { SocketContext } from '../socket';
 
 // import { Link } from 'react-router-dom'
-const TestCard = ({ testId, starts = '', small = true, challengeMode = false, canChange = false }) => {
+const TestCard = ({ testId, starts = '', small = true, challengeMode = false, canChange = false, course = false, courseId = '' }) => {
     // //console.log(starts)
     let navigate = useNavigate()
     const [test, setTest] = useState({ questions: [], name: '', creator: '', description: '' })
@@ -200,7 +200,7 @@ const TestCard = ({ testId, starts = '', small = true, challengeMode = false, ca
                             <h1>{test.name}</h1>
                             <div className=" flex gap-2 navbar-progress">
                                 <span className=' w-[2%] mt-1 pl'>
-                                    {user.testProgress!==undefined && user.testProgress[testId]!==undefined  && small === true ?
+                                    {user.testProgress !== undefined && user.testProgress[testId] !== undefined && small === true ?
                                         <Progress percent={
                                             (() => {
                                                 let p;
@@ -212,8 +212,8 @@ const TestCard = ({ testId, starts = '', small = true, challengeMode = false, ca
                                                 return p
                                             })()
 
-// style={{ width: '10%' }}
-                                        } type = "circle" showInfo={false} strokeColor="#525E7580"  />
+                                            // style={{ width: '10%' }}
+                                        } type="circle" showInfo={false} strokeColor="#525E7580" />
                                         : <></>}
                                 </span>
                                 <span className="questionNumber ml-5 bg-primary-300 rounded-lg pt-[2px] px-2 hover:shadow-md  max-h-7">{test.questions.length}</span>
@@ -274,35 +274,55 @@ const TestCard = ({ testId, starts = '', small = true, challengeMode = false, ca
 
                         : undefined}
                     {challengeMode === false ?
-                        <div className={" p-3  flex justify-center gap-3 " + (() => { return small === true ? ' h-[30%] bg-sub-200' : 'h-[15%]' })()}>
-                            <button onClick={() => setShowPracticeModal(true)} className="practice px-2 py-1 w-full bg-dark-500 text-white rounded-md">Practice</button>
-                            <Modal className='SettingsModal ' title="Practice" zIndex={1000}
-                                centered visible={showPracticeModal}
-                                onOk={() => setShowPracticeModal(false)}
-                                onCancel={() => setShowPracticeModal(false)}>
-
-                                {/* <Link to = {'answeStation/' + test.Id} component= {AnswerStation}></Link> */}
-                                <Link to={'/practice/answerStation/' + testId} component={AnswerStation}>Go To The Practice Page </Link>
-                            </Modal>
+                        <>
 
 
-                            <button onClick={() => setShowFriendsDrawer(true)}
-                                className="play px-1 py-1 w-full bg-primary-500 text-white rounded-md">
-                                Play</button>
-                            <button onClick={() => { hostGame() }}
-                                className="play px-1 py-1 w-full bg-dark-500 text-white rounded-md">
-                                Host</button>
+                            {
+                                course === true ?
+                                    <>
+                                        <div className={" p-3  flex justify-center gap-3 " + (() => { return small === true ? ' h-[30%] bg-sub-200' : 'h-[15%]' })()}>
+                                            <button onClick={() => navigate('/course/answerStation/' + testId + '/' + courseId)} className="practice px-2 py-1 w-full bg-dark-500 text-white rounded-md">Complete Test</button>
 
-                            <Modal className='SettingsModal ' title="Play" zIndex={1000}
-                                centered visible={showPlayModal}
-                                onOk={() => setShowPlayModal(false)}
-                                onCancel={() => setShowPlayModal(false)}>
-                                <input type="text" className='bg-gray-200 w-2'
-                                    onChange={(e) => setChallengeTo(e.target.value)} />
-                                <button onClick={challenge}>Test Challenge Friend button</button>
-                            </Modal>
 
-                        </div>
+
+
+
+                                        </div>
+
+                                    </> :
+                                    <div className={" p-3  flex justify-center gap-3 " + (() => { return small === true ? ' h-[30%] bg-sub-200' : 'h-[15%]' })()}>
+
+
+                                        <button onClick={() => setShowPracticeModal(true)} className="practice px-2 py-1 w-full bg-dark-500 text-white rounded-md">Practice</button>
+                                        <Modal className='SettingsModal ' title="Practice" zIndex={1000}
+                                            centered visible={showPracticeModal}
+                                            onOk={() => setShowPracticeModal(false)}
+                                            onCancel={() => setShowPracticeModal(false)}>
+
+                                            {/* <Link to = {'answeStation/' + test.Id} component= {AnswerStation}></Link> */}
+                                            <Link to={'/practice/answerStation/' + testId} component={AnswerStation}>Go To The Practice Page </Link>
+                                        </Modal>
+
+
+                                        <button onClick={() => setShowFriendsDrawer(true)}
+                                            className="play px-1 py-1 w-full bg-primary-500 text-white rounded-md">
+                                            Play</button>
+                                        {/* <button onClick={() => { hostGame() }}
+                                            className="play px-1 py-1 w-full bg-dark-500 text-white rounded-md">
+                                            Host</button> */}
+
+                                        <Modal className='SettingsModal ' title="Play" zIndex={1000}
+                                            centered visible={showPlayModal}
+                                            onOk={() => setShowPlayModal(false)}
+                                            onCancel={() => setShowPlayModal(false)}>
+                                            <input type="text" className='bg-gray-200 w-2'
+                                                onChange={(e) => setChallengeTo(e.target.value)} />
+                                            <button onClick={challenge}>Test Challenge Friend button</button>
+                                        </Modal>
+
+                                    </div>
+                            }
+                        </>
                         : undefined}
                 </div>
                 : undefined}

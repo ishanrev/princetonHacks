@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import SideBar from '../components/General/sidebar'
-import { Tabs, Progress, Carousel, Drawer, notification, Modal, Spin, Empty } from 'antd'
+import { Tabs, Progress, Carousel, Drawer, notification, Modal, Spin, Empty, Tooltip } from 'antd'
 import { PlusOutlined, UserOutlined, MinusOutlined, CheckOutlined, CloseOutlined, Badge, EditOutlined, UploadOutlined } from '@ant-design/icons'
 import { Bar } from 'react-chartjs-2';
 import DynamicChart from '../components/General/tester';
@@ -12,7 +12,74 @@ import axiosLink from '../axiosInstance';
 import ChalengeFriendDrawer from '../components/General/chalengeFriendDrawer';
 import { TestCard } from './browseTests';
 import { Image } from 'cloudinary-react'
-import 'animate.css';
+import basicBadge from '../images/basicBadge.png'
+import mediumBadge from '../images/mediumBadge.png'
+import proBadge from '../images/proBadge.png'
+import masterBadge from '../images/masterBadge.png'
+import expertBadge from '../images/expertBadge.png'
+
+const apiKey = 'sk_live_b7148d24-c106-414b-be1b-28e6bf2cd1a0'
+const contractAddress = '0x41e0F19FaC825088622Ce524Acae49160d8c8B5D'
+
+const badges = [
+    { id: 1, name: "basicBadge", ipfsLink: "ipfs://QmSHMoTTY4h8gZjXruL931RZ4nnRR33veCAZj39TuUUFaA", image: basicBadge, num: 3 },
+    { id: 2, name: "mediumBadge", ipfsLink: "ipfs://QmbdttjUjvZzYQaTE3PAAyQQwcAGBqYJA2nv3a6r1Nk6gS", image: mediumBadge, num: 5 },
+    { id: 3, name: "proBadge", ipfsLink: "ipfs://QmPi3vz6mwVAgrTGooKpGnpcShSRbXqiRovb7CdPjTKp17", image: proBadge, num: 10 },
+    { id: 4, name: "masterBadge", ipfsLink: "ipfs://QmXfG3BdWgJp6hWpvmGciohgrbCesvJoRkDRA4ScXH3x4J", image: masterBadge, num: 50 },
+    { id: 5, name: "expertBadge", ipfsLink: "ipfs://QmYk7zcoBKD9XrrC7tnpKfkW3c79FohpWtc4zELFG8ochK", image: expertBadge, num: 100 },
+];
+
+const completedCourses = 3;
+
+async function checkCoursesAndMintBadge(userId) {
+    let badgeURI = '';
+    if (completedCourses >= 3) {
+        badgeURI = "ipfs://QmSHMoTTY4h8gZjXruL931RZ4nnRR33veCAZj39TuUUFaA";
+    } else if (completedCourses >= 5) {
+        badgeURI = "ipfs://QmbdttjUjvZzYQaTE3PAAyQQwcAGBqYJA2nv3a6r1Nk6gS";
+    } else if (completedCourses >= 10) {
+        badgeURI = "ipfs://QmPi3vz6mwVAgrTGooKpGnpcShSRbXqiRovb7CdPjTKp17";
+    } else if (completedCourses >= 50) {
+        badgeURI = "ipfs://QmXfG3BdWgJp6hWpvmGciohgrbCesvJoRkDRA4ScXH3x4J";
+    } else if (completedCourses >= 100) {
+        badgeURI = "ipfs://QmYk7zcoBKD9XrrC7tnpKfkW3c79FohpWtc4zELFG8ochK";
+    } else {
+        return;
+    }
+
+    await mintBadge(userId, badgeURI);
+}
+
+async function mintBadge(userId, badgeURI) {
+    const form = new FormData();
+    form.append("chain", "goerli");
+    form.append("contractAddress", contractAddress);
+    form.append("tokenURI", badgeURI);
+    // Assuming 'userId' can be mapped to a wallet address or similar
+    // You may need to adjust based on your application's user identification logic
+    form.append("toAddress", userId); // Ensure this is the user's wallet address
+
+    const options = {
+        method: "POST",
+        headers: {
+            "X-API-Key": apiKey,
+            // Add any other headers required by VerbWire
+        },
+        body: form,
+    };
+
+    try {
+        const response = await fetch("https://api.verbwire.com/v1/nft/mint", options);
+        const data = await response.json();
+        console.log(data); // Log the response for debugging
+    } catch (error) {
+        console.error(`Error minting badge: ${error}`);
+    }
+}
+
+
+
+
 
 const { TabPane } = Tabs
 const ALT_IMAGE = "https://res.cloudinary.com/dhlxchjon/image/upload/v1658670857/user-icon_t5lgwl.png"
@@ -381,11 +448,11 @@ function Dashboard() {
                         <div className="chart w-2/3 h-[300px] animate__animated animate__fadeInUp rounded-lg shadow-lg 
                         items-center p-1  px-3 shad bg-[#fafafa]
                          border-2 border-dark-400 gap-6 pt-5">
-                            <div className='flex justify-between'>
+                            {/* <div className='flex justify-between'>
 
                                 <span className='text-2xl px-2'>{preview === "challenges" ? "Challenges" : "My Progress"}</span>
                                 {previewSwitch}
-                            </div>
+                            </div> */}
                             {/* <Bar options={options} data={data} />; */}
                             {/* {<BarChartComp />} */}
                             <div className='flex justify-between '>
@@ -400,21 +467,41 @@ function Dashboard() {
                             </div>
 
                         </div>
-                        <div className="challenges w-1/3 h-[200px] rounded-lg shadow-lg p-3 shad bg-[#fafafa]
-                         border-2 border-dark-400 items-center flex justify-center">
+                        <div className="left bg-[#fafafa]
+                         border-2 border-dark-400 row-span-2 
+                         h-full w-[50%] p-3 shadow-lg rounded-lg overflow-y-scroll">
+                            <span className='text-xl block mb-3'>Badges</span>
+                            <div className="hr w-full h-[2px] bg-gray-300 rounded-3xl pl-2 mb-8">
+                            </div>
+                            <div className="flex justify-between mt-10">
+                                {badges.map((badge) => {
 
+                                    let brightness = "brightness-50";
+                                    let badgeTitle = `Upon Completion of ${badge.num} courses`;
 
-                            <Progress type='circle' format={percent => {
+                                    if ((completedCourses >= 3 && badge.name === "basicBadge") ||
+                                        (completedCourses >= 5 && badge.name === "mediumBadge") ||
+                                        (completedCourses >= 10 && badge.name === "proBadge") ||
+                                        (completedCourses >= 50 && badge.name === "masterBadge") ||
+                                        (completedCourses >= 100 && badge.name === "expertBadge")) {
+                                        brightness = "brightness-100";
+                                        badgeTitle = `Earned: ${badge.name.replace('Badge', '')} badge`;
 
-                                return <span className=' fon'>{`${percent} days`}</span>
-                            }
-                            } showInfo percent={(() => {
-                                if (user.daysActive !== undefined) {
-                                    return user.daysActive.length
-                                } else {
-                                    return 10
-                                }
-                            })()} width={150} strokeColor='#525E75' trailColor='#86b7b825' />
+                                    }
+                                    return (
+                                        <div key={badge.id} className={'w-1/5 flex justify-center'}>
+                                            <Tooltip title={badgeTitle}>
+                                                <img src={badge.image} alt={badge.name} className={`${brightness} w-full h-auto`} />
+                                            </Tooltip>
+                                            {/* <div className="absolute bottom-0 pb-2 pt-1 px-3 bg-black text-white text-xs rounded opacity-0 hover:opacity-100 transition-opacity duration-300 ease-in-out">
+                                                {badgeTitle}
+                                            </div> */}
+
+                                        </div>
+                                    );
+                                })}
+                            </div>
+
                         </div>
                     </div>
                     <div className="flex justify-between mt-10">
@@ -422,7 +509,7 @@ function Dashboard() {
                         <div className="flex justify-between gap-4 h-[50vh] animate__animated animate__fadeInUp w-[65%]">
                             <div className="left bg-[#fafafa]
                          border-2 border-dark-400 row-span-2 
-                         h-full w-[50%] p-3 shadow-lg rounded-lg overflow-y-scroll">
+                         h-full w-[65%] p-3 shadow-lg rounded-lg overflow-y-scroll">
                                 <span className='text-xl block mb-3'>Continue practicing</span>
                                 <div className="hr w-full h-[2px] bg-gray-300 rounded-3xl pl-2 mb-8">
                                 </div>
@@ -441,18 +528,18 @@ function Dashboard() {
                                 </div>
 
                             </div>
-                            <div className='right w-[50%] flex flex-col'>
+                            {/* <div className='right w-[50%] flex flex-col'>
                                 <div className="rightTop bg-[#fafafa]
                          border-2 border-dark-400 shadow-lg rounded-lg pt-3 px-3 h-1/2 mb-2  w-full">
                                     <UserInfo />
-                                </div>
+                                </div> */}
 
-                                {/* <div className="rightBottom  bg-[#fafafa]
+                            {/* <div className="rightBottom  bg-[#fafafa]
                          border-2 border-dark-400 shadow-lg rounded-lg py-3 h-1/2  w-full animate__animated animate__fadeInUp overflow-y-scroll">
                                     <div className="list-of-challenges  ">
                                     </div>
                                 </div> */}
-                            </div>
+                            {/* </div> */}
 
                         </div>
                         <div className="friend wrapper">

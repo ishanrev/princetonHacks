@@ -2,13 +2,13 @@ import React, { useContext, useEffect, useState, } from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import Split from 'react-split'
 // import { Modal } from '../components/General/CoolComponents'
-  
+
 import AceEditor from 'react-ace'
 // Languages
 import 'ace-builds/src-noconflict/mode-javascript'
 import 'ace-builds/src-noconflict/mode-python'
-import 'ace-builds/src-noconflict/mode-json' 
-import 'ace-builds/src-noconflict/mode-java' 
+import 'ace-builds/src-noconflict/mode-json'
+import 'ace-builds/src-noconflict/mode-java'
 import 'ace-builds/src-noconflict/mode-csharp'
 // there are many themes to import, I liked monokai.
 import 'ace-builds/src-noconflict/theme-monokai'
@@ -203,7 +203,7 @@ function Settings({ settings, setSettings }) {
 
 function AnswerStation({ game, tId, gameId, gameObject }) {
     let TOPG = "The Bad Luck Island is inhabited by three kinds of species: r rocks, s scissors and p papers. At some moments of time two random individuals meet (all pairs of individuals can meet equiprobably), and if they belong to different species, then one individual kills the other one: a rock kills scissors, scissors kill paper, and paper kills a rock. Your task is to determine for each species what is the probability that this species will be the only one to inhabit this island after a long enough period of time.\n\n\n-----Input-----\n\nThe single line contains three integers r, s and p $(1 ≤ r, s, p ≤ 100)$ — the original number of individuals in the species of rock, scissors and paper, respectively.\n\n\n-----Output-----\n\nPrint three space-separated real numbers: the probabilities, at which the rocks, the scissors and the paper will be the only surviving species, respectively. The answer will be considered correct if the relative or absolute error of each number doesn't exceed $10^{ - 9}$.\n\n\n-----Examples-----\nInput\n2 2 2\n\nOutput\n0.333333333333 0.333333333333 0.333333333333\n\nInput\n2 1 2\n\nOutput\n0.150000000000 0.300000000000 0.550000000000\n\nInput\n1 1 3\n\nOutput\n0.057142857143 0.657142857143 0.285714285714"
-    const { id } = useParams()
+    const { id, courseId } = useParams()
     const [searchParams, setSearchParams] = useSearchParams()
     const pathName = window.location.pathname
     const mode = pathName.substring(1, pathName.indexOf('/', 2))
@@ -330,36 +330,36 @@ function AnswerStation({ game, tId, gameId, gameObject }) {
                 }
                 return dType
             }
-            returnType= getJavaDataType(sampleOutput)
+            returnType = getJavaDataType(sampleOutput)
 
-            function convertJavaDataType(type){
+            function convertJavaDataType(type) {
                 if (type === 'String') {
                     return 'String'
                 }
                 else if (type === 'Integer') {
                     return 'int'
-        
+
                 }
                 else if (type === 'Boolean') {
-                   return 'booelan'
+                    return 'booelan'
                 }
                 else if (type === 'StringArray') {
-                   return 'String[]'
+                    return 'String[]'
                 }
                 else if (type === 'IntegerArray') {
-                   return 'int[]'
-                }else if (type === 'Boolean') {
+                    return 'int[]'
+                } else if (type === 'Boolean') {
                     return 'boolean[]'
-                 }
+                }
             }
 
             stub = stub + `public static ${returnType} ${funcName}(`
             let x = 0;
             for (let pName of parameterNames) {
                 if (x < parameterNames.length - 1)
-                    stub += convertJavaDataType(parameterTypes[x])+' '+pName + ', '
+                    stub += convertJavaDataType(parameterTypes[x]) + ' ' + pName + ', '
                 else
-                    stub += convertJavaDataType(parameterTypes[x])+' '+pName
+                    stub += convertJavaDataType(parameterTypes[x]) + ' ' + pName
                 x += 1
             }
             stub = stub + `){
@@ -703,6 +703,13 @@ function AnswerStation({ game, tId, gameId, gameObject }) {
                     //console.log(questions[currentQuestion.num].points)
                     myProgress.score += questions[currentQuestion.num].points
                     myProgress.questionsIndex.push(currentQuestion.num)
+                }
+            }
+            if (mode === 'course' && passed === true) {
+                try {
+                    await axios.post(axiosLink + '/course/progress', { userId: user._id.toString(), courseId: courseId })
+                } catch (progressError) {
+                    console.log(progressError)
                 }
             }
 

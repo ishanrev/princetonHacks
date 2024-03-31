@@ -206,12 +206,13 @@ function App() {
                                 {/* <Route exact path='/' element={<Login />} /> */}
                                 <Route exact path='/practice/answerStation/:id' element={<AnswerStation />} />
                                 <Route exact path='/challenge/answerStation/:id' element={<AnswerStation />} />
-                                <Route exact path='/game/:id' element={<GamePage />} />
+                                <Route exact path='/course/answerStation/:id/:courseId' element={<AnswerStation />} />
+                                {/* <Route exact path='/game/:id' element={<GamePage />} /> */}
                                 <Route exact path='/dashboard' element={<Dashboard />} />
-                                <Route exact path='/testCenter' element={<TestCenter />} />
+                                {/* <Route exact path='/testCenter' element={<TestCenter />} /> */}
                                 <Route exact path='/browse' element={<BrowseTests />} />
                                 <Route exact path='/create' element={<TestMakerPage />} />
-                                <Route exact path='/joinGame' element={<GamePinPage />} />
+                                {/* <Route exact path='/joinGame' element={<GamePinPage />} /> */}
                                 <Route exact path='/courses' element={<CoursePage />} />
                                 <Route exact path='/course/:courseId' element={<CourseMain />} />
 

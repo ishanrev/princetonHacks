@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import QuestionEditor from '../TestMaker/QuestionEditor'
 import { MenuOutlined, LeftCircleOutlined, CompassOutlined, TeamOutlined, LineChartOutlined, HddOutlined, FolderAddOutlined, DribbbleOutlined } from '@ant-design/icons'
 import { UserContext } from '../../contexts'
-import HomeStructo from '../../images/home-structo.png'
+// import HomeStructo from '../../images/home-structo.png'
+import HomeLogo from '../../images/logoMain.png'
 
 function SideBar({ drawer }) {
     const navigate = useNavigate()
@@ -37,10 +38,10 @@ function SideBar({ drawer }) {
                 {/* SideBar header */}
                 <ul className=''>
                     {/* <div className="header flex justify-between "> */}
-                    {/* <li className='pt-1 my-1 mb-[20px]'>
-                        <img src={HomeStructo} alt="" />
+                    <li className='pt-1 my-1 mb-[20px]'>
+                        <img src={HomeLogo} alt="" />
 
-                    </li> */}
+                    </li>
 
                     <div className="search  my-5 w-full gap-2">
 
@@ -62,21 +63,21 @@ function SideBar({ drawer }) {
                     </div>
                     <div className="links ">
 
-                        <li className=''><button className='create 
+                        {/* <li className=''><button className='create 
                         rounded-xl  bg-dark-500 my-3  text-white w-full h-10 hover:opacity-50'
                             onClick={() => {
                                 navigate('/create')
                             }}
-                        >Create Test</button></li>
+                        >Create Test</button></li> */}
 
-                        <li className={'' + liClass}
+                        {/* <li className={'' + liClass}
                             onClick={() => { navigate('/testCenter') }}>
                             <i className="fa fa-file-text-o text-[18px] " ></i>
                             <div className='flex justify-start items-center'>
                                 <FolderAddOutlined style={iconStyle} />
                                 <span className='text-md'>My Tests</span>
                             </div>
-                        </li>
+                        </li> */}
                         <li className={'' + liClass}
                             onClick={() => { navigate('/browse') }}>
                             <i class="fa fa-magnifying-glass text-[18px]"></i>
@@ -86,14 +87,14 @@ function SideBar({ drawer }) {
                             </div>
 
                         </li>
-                        <li className={'' + liClass}
+                        {/* <li className={'' + liClass}
                             onClick={() => { navigate('/dashboard') }}>
                             <i class="fa fa-user-group text-[18px] "></i>
                             <div className='flex justify-start items-center'>
                                 <TeamOutlined style={iconStyle} />
                                 <span className='text-md'>Friends</span>
                             </div>
-                        </li>
+                        </li> */}
                         <li className={'' + liClass}
                             onClick={() => { navigate('/dashboard') }}
                         >
@@ -103,7 +104,7 @@ function SideBar({ drawer }) {
                                 <span className='text-md'>Dashboard</span>
                             </div>
                         </li>
-                        <li className={'' + liClass}
+                        {/* <li className={'' + liClass}
                             onClick={() => { navigate('/joinGame') }}
                         >
                             <i class="fa fa-user-group text-[18px] "></i>
@@ -111,8 +112,8 @@ function SideBar({ drawer }) {
                                 <DribbbleOutlined style={iconStyle} />
                                 <span className='text-md'>Join</span>
                             </div>
-                        </li>
-                        <li className={'' + liClass}
+                        </li> */}
+                        {/* <li className={'' + liClass}
                             onClick={() => { navigate('/testCenter') }}
                         >
                             <i class="fa fa-user-group text-[18px] "></i>
@@ -120,7 +121,7 @@ function SideBar({ drawer }) {
                                 <HddOutlined style={iconStyle} />
                                 <span className='text-md'>Test Center</span>
                             </div>
-                        </li>
+                        </li> */}
                         <li className={'' + liClass}
                             onClick={() => { navigate('/courses') }}
                         >

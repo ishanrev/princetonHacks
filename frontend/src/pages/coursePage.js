@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { UserOutlined, EditOutlined, EllipsisOutlined, SettingOutlined, SearchOutlined } from '@ant-design/icons';
-import { Menu, Dropdown, Modal, message, Switch, Empty, Progress, Grid } from 'antd';
+import { Menu, Dropdown, Modal, message, Switch, Empty, Progress, Grid, Input, Spin } from 'antd';
 import AnswerStation from './answerStation';
 import { Link, useNavigate } from 'react-router-dom'
 import { UserContext, SocketContext, LoggedInContext } from '../contexts';
@@ -205,7 +205,9 @@ const CourseCard = ({ courseId, starts = '', small = true, challengeMode = false
                                             //     p = ((user.testProgress[testId].questionsCompleted) / (test.questions.length)) * 100
                                             // }
                                             // console.log(p)
-                                            return 30
+                                            console.log(user.courses[courseId].progress)
+                                            console.log(course.total)
+                                            return Math.ceil(user.courses[courseId].progress * 100 / course.total)
                                         })()
 
                                         // style={{ width: '10%' }}
@@ -245,7 +247,10 @@ function NoTestsFound() {
 
 function CoursePage() {
     const [search, setSearch] = useState('')
-
+    const [createModal, setCreateModal] = useState(false)
+    const [prompt, setPrompt] = useState('false')
+    const [waiting, setWaiting] = useState(false)
+    const [message, setMessage] = useState('')
     // const [tests, setTests] = useState(['624044d2bf2ff26c3a0e123f', '624044d2bf2ff26c3a0e123f',
     //     '624044d2bf2ff26c3a0e123f', '624044d2bf2ff26c3a0e123f', '624044d2bf2ff26c3a0e123f',
     //     '624044d2bf2ff26c3a0e123f', '624044d2bf2ff26c3a0e123f', '624044d2bf2ff26c3a0e123f',
@@ -283,9 +288,26 @@ function CoursePage() {
 
     }, [])
 
+    const createPrompt = async () => {
+        try {
+            setWaiting(true)
+            let res = await axios.get(axiosLink + '/course/create/new', { prompt })
+            console.log(res)
+            setWaiting(false)
+            let courseRes = res.data.course
+
+            let deployRes = await axios.post(axiosLink + '/course/deploy', { course: courseRes, userId: user._id.toString() })
+            console.log('deploy Res', deployRes)
+            setMessage("Your custom course has successfully been created, relogin to the platform to view it.")
+
+        } catch (createPromptError) {
+            console.log(createPromptError)
+        }
+    }
+
     return (
         <>
-            <div className='bg-base  min-h-[100vh]'>
+            <div className='bg-base  min-h-[100vh] h-full'>
                 <div className='h-14'></div>
                 <div className=" h-[15vh] rounded-lg shadow-xl bg-sub-500 border-2 border-sub-300  mx-[110px]  
        px-10 flex justify-between items-center text-center gap-12 ">
@@ -299,9 +321,23 @@ function CoursePage() {
                 </div>
                 <div className='browseTests p-10 pt-5 px-24 bg-base'>
                     <div className="search flex justify-center">
-                        <input type="text" name="" id="" className='w-1/2 focus:outline-none p-2 h-[50px] rounded-lg shadow-md bg-slate-100 '
-                            onChange={(e) => { setSearch(e.target.value) }}
-                        />
+                        <Modal okButtonProps={<button className="practice px-2 h-9 py-1 w-1/6 bg-dark-500 text-white rounded-md">Create a Course</button>} okText='Create' visible={createModal} onOk={() => { createPrompt() }} onCancel={() => { setCreateModal(false) }} title='Create a Course'>
+                            <div className=' f1'>
+                                <div>
+                                    <Input onChange={(e) => { setPrompt(e.target.value) }} placeholder="Enter what you want to learn from the course" />
+                                    <br />
+                                    <br />
+                                    {waiting === true ? <>
+                                        <Spin size="large" />
+                                        <br />
+                                        <span className='text-md w-10'> This might take a few minutes, please wait on this screen</span>
+                                    </> : undefined}
+                                </div>
+                                <h3 className='w-full p-2 bg-green-200 rounded-lg my-4 border-2 border-green-300'>{message}</h3>
+                            </div>
+                        </Modal>
+                        <button onClick={() => { setCreateModal(true) }} className="practice px-2 h-9 py-1 w-1/6 bg-dark-500 text-white rounded-md">Create a Course</button>
+
                         {/* <span className='w-[50px] flex justify-center items-center border-2 border-dark-500 rounded-lg 
                      ml-2 cursor-pointer hover:bg-dark-500'
                             onClick={getTests}
@@ -322,7 +358,7 @@ function CoursePage() {
                         : undefined
                     }
                 </div>
-            </div>
+            </div >
         </>
     )
 }

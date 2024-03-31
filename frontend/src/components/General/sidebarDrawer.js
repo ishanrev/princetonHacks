@@ -65,22 +65,22 @@ function SideBarMainDrawer({ drawer }) {
                     </div>
                     <div className="links ">
 
-                        <li className=''><button className='create 
+                        {/* <li className=''><button className='create 
                         rounded-xl bg-dark-500 my-3  text-white w-full h-10 hover:opacity-50 
                         hover:bg-primary-main'
                             onClick={() => {
                                 navigate('/create')
                             }}
-                        >Create Test</button></li>
+                        >Create Test</button></li> */}
 
-                        <li className={'' + liClass}
+                        {/* <li className={'' + liClass}
                             onClick={() => { navigate('/testCenter') }}>
                             <i className="fa fa-file-text-o text-[18px] " ></i>
                             <div className='flex justify-start items-center'>
                                 <FolderAddOutlined style={iconStyle} />
                                 <span className='text-md'>My Tests</span>
                             </div>
-                        </li>
+                        </li> */}
                         <li className={'' + liClass}
                             onClick={() => { navigate('/browse') }}>
                             <i class="fa fa-magnifying-glass text-[18px]"></i>
@@ -90,14 +90,14 @@ function SideBarMainDrawer({ drawer }) {
                             </div>
 
                         </li>
-                        <li className={'' + liClass}
+                        {/* <li className={'' + liClass}
                             onClick={() => { navigate('/dashboard') }}>
                             <i class="fa fa-user-group text-[18px] "></i>
                             <div className='flex justify-start items-center'>
                                 <TeamOutlined style={iconStyle} />
                                 <span className='text-md'>Friends</span>
                             </div>
-                        </li>
+                        </li> */}
                         <li className={'' + liClass}
                             onClick={() => { navigate('/dashboard') }}
                         >
@@ -107,7 +107,7 @@ function SideBarMainDrawer({ drawer }) {
                                 <span className='text-md'>Dashboard</span>
                             </div>
                         </li>
-                        <li className={'' + liClass}
+                        {/* <li className={'' + liClass}
                             onClick={() => { navigate('/joinGame') }}
                         >
                             <i class="fa fa-user-group text-[18px] "></i>
@@ -115,8 +115,8 @@ function SideBarMainDrawer({ drawer }) {
                                 <DribbbleOutlined style={iconStyle} />
                                 <span className='text-md'>Join</span>
                             </div>
-                        </li>
-                        <li className={'' + liClass}
+                        </li> */}
+                        {/* <li className={'' + liClass}
                             onClick={() => { navigate('/testCenter') }}
                         >
                             <i class="fa fa-user-group text-[18px] "></i>
@@ -124,7 +124,7 @@ function SideBarMainDrawer({ drawer }) {
                                 <HddOutlined style={iconStyle} />
                                 <span className='text-md'>Test Center</span>
                             </div>
-                        </li>
+                        </li> */}
                         <li className={'' + liClass}
                             onClick={() => { navigate('/courses') }}
                         >

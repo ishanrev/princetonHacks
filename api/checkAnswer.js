@@ -22,8 +22,13 @@ if (!fs.existsSync(dirCodes)) {
 const executePy = async (filepath) => {
     const name = path.basename(filepath)
     let runCommand;
-    // runCommand = `python api/test-codes/${name} `
-    runCommand = `python test-codes/${name} `
+    if (process.env.NODE_ENV === "production") {
+
+        runCommand = `python api/test-codes/${name} `
+    } else {
+
+        runCommand = `python test-codes/${name} `
+    }
 
     console.log("ommmmmmmmmmmmmmm saiiiiiiii rammmmmm")
     console.log(__dirname)
@@ -215,8 +220,13 @@ function arrayToStringJS(string, arr, i = 0) {
 const executeJS = async (filepath) => {
     const name = path.basename(filepath)
     let runCommand;
-    // runCommand = `node api/test-codes/${name} `
-    runCommand = `node test-codes/${name} `
+    if (process.env.NODE_ENV === "production") {
+
+        runCommand = `node api/test-codes/${name} `
+    } else {
+
+        runCommand = `node test-codes/${name} `
+    }
     console.log('going to run the command right now')
     console.log('going to run the command right now')
     return new Promise((resolve, reject) => {
@@ -431,8 +441,8 @@ const processCodeJava = async (codeMain, input, parameterTypes, funcName, jobId)
     }
 `
     codeMain = `public class MyClass{
-`+ codeMain+`
-`+code + `
+`+ codeMain + `
+`+ code + `
 }`
     return codeMain;
 }
@@ -465,7 +475,7 @@ const executeJava = async (code) => {
                 console.log(response.data)
                 if (response.data.success === true) {
                     let out = response.data.output
-                    resolve(out.substring(0,out.length-1));
+                    resolve(out.substring(0, out.length - 1));
                 } else {
                     resolve(JSON.stringify(response.data.error));
                 }
