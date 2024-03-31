@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import axiosLink from '../axiosInstance'
 import { LoggedInContext, SocketContext, UserContext } from '../contexts'
 import { Spin } from 'antd'
+import { jwtDecode } from "jwt-decode"; // Use named import instead of default
 
 function SignIn() {
     const { user, setUser } = useContext(UserContext)
@@ -19,6 +20,34 @@ function SignIn() {
     const [signedUp, setSignedUp] = useState(undefined)
     const [loading, setLoading] = useState(false)
     const input = 'bg-gray-100 rounded-lg px-2 py-2 w-full focus:outline-none border-2 border-gray-200 '
+
+    useEffect(() => {
+        const script = document.createElement('script');
+        script.src = 'https://accounts.google.com/gsi/client';
+        script.onload = () => {
+            handleGoogleScriptLoad();
+        };
+        document.body.appendChild(script);
+    }, []);
+
+    function handleCallbackResponse(response) {
+        console.log("Encoded JWT ID token: " + response.credential);
+        var userObject = jwtDecode(response.credential); // Use the named import jwtDecode
+        console.log(userObject);
+    }
+
+    function handleGoogleScriptLoad() {
+        /* global google */
+        google.accounts.id.initialize({
+            client_id: "861748259643-bgv61qg3jo0rqjlctdsejqa3evrs8oof.apps.googleusercontent.com", // Ensure you have prefixed your environment variable with REACT_APP_
+            callback: handleCallbackResponse,
+        });
+
+        google.accounts.id.renderButton(
+            document.getElementById("signInDiv"),
+            { theme: "outline"}
+        );
+    }
 
     function checkPassword() {
 
@@ -141,6 +170,7 @@ function SignIn() {
                     {signedUp === true ? <h3 className='w-full p-2 bg-green-200 rounded-lg my-4 border-2 border-green-300'>{loggedInMessage}</h3> : signedUp === false ?
                         <h3 className='w-full p-2 bg-red-200 rounded-lg my-4 border-2 border-red-300'>{loggedInMessage}</h3> : undefined}
                 </div>
+                <div id="signInDiv"></div>
                 <div className='flex justify-between mt-10'>
                     <div className='py-2'>
                         <input type="checkbox" name="" id="rememberMe" className='' />
@@ -149,7 +179,7 @@ function SignIn() {
                     <div className='w-[70px]  py-2 px-2 hover:cursor-pointer text-white rounded-3xl bg-sub-500    hover:bg-yellow-200'>
 
                         <Spin spinning={loading}>
-                            <button className=''
+                            <button className='whitespace-nowrap'
                                 onClick={handleSignIn}>Sign Up</button>
                         </Spin>
                     </div>
